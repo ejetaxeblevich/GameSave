@@ -17,7 +17,7 @@
 
 <div align="center">
 
-<img src="exm_gamesave_logo.png" width="500" />
+<img src="exm_gamesave_logo.png" width="450" />
 
 </div>
 
