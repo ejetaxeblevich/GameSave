@@ -7,7 +7,7 @@
 --               написанный специально для игры
 --             Ex Machina / Hard Truck Apocalypse
 --
---                      GameSave v1.0
+--                      GameSave v1.1
 -- 
 -- 
 -- ===================== Автор E Jet ==========================
@@ -330,7 +330,7 @@
 
 local GameSave = {}
 GameSave.__index = GameSave
-GameSave.version = "v1.0"
+GameSave.version = "v1.1"
 GameSave.LastSave_PATH = nil
 GameSave.cfg = {}
 GameSave.File = {}
@@ -491,7 +491,7 @@ end
 
 
 local function string_strip(str)
-	return str_gsub(str, "^%s*(.-)%s*$", "%1")
+	return (str_gsub(str, "^%s*(.-)%s*$", "%1"))
 end
 
 local function string_split(str, divider)
@@ -636,7 +636,8 @@ function GS:GetSavedFileName()
 end
 
 function GS:UpdateLastSavePATH(stringPATH)
-	local stringPATH = str_gsub(stringPATH, CONFIG.Default_SaveInfo, CONFIG.Default_CurrentMap)
+	local stringPATH = tostring(stringPATH)
+	stringPATH = str_gsub(stringPATH, CONFIG.Default_SaveInfo, CONFIG.Default_CurrentMap)
 	if XMLParser:IsFileExists(stringPATH) then
 		GameSave.LastSave_PATH = stringPATH
 		self.LastSave_PATH = stringPATH
