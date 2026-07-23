@@ -7,7 +7,7 @@
 --               написанный специально для игры
 --             Ex Machina / Hard Truck Apocalypse
 --
---                      GameSave v1.1
+--                      GameSave v1.1.1
 -- 
 -- 
 -- ===================== Автор E Jet ==========================
@@ -330,7 +330,7 @@
 
 local GameSave = {}
 GameSave.__index = GameSave
-GameSave.version = "v1.1"
+GameSave.version = "v1.1.1"
 GameSave.LastSave_PATH = nil
 GameSave.cfg = {}
 GameSave.File = {}
@@ -804,7 +804,7 @@ function GS:CreateAndSetObjectFrom(stringObjectName, cvectorNewPosition, stringC
 			elseif DynScene:IsTown(OBJECT) then
 				return DynScene:SetTownShops(OBJECT)
 			else
-				local obj = DynScene:CreateAndSetObject(Object)
+				local obj = DynScene:CreateAndSetObject(OBJECT)
 				if not obj then
 					LOG("[E] Module GameSave.lua === Unsorted object ERROR!", Property.Name)
 				end
