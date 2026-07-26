@@ -43,8 +43,8 @@
       <td><a href="#allAboutIt_en">All instructions for modders</a></td>
     </tr>
     <tr>
-      <td><a href="#allFunctions_ru">Все методы и функции lua-модуля</a></td>
-      <td><a href="#allFunctions_en">All methods and functions of the lua-module</a></td>
+      <td><a href="#allFunctions_ru">Все методы и функции</a></td>
+      <td><a href="#allFunctions_en">All methods and functions</a></td>
     </tr>
     <tr>
       <td><a href="#incorrigibleBugs_ru">Неисправимые баги</a></td>
