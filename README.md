@@ -408,7 +408,7 @@ B. To return the relationship from the old save file, in which they still worked
 
 4. Remember the number of the found save (for example, `00000083`) and write it down to yourself as follows: `GS:LoadToleranceStatus("data\\profiles\\your_profile_name\\saves\\00000083\\maps\\currentmap.xml")`
 
-5. Load your last save (the one where the relationship is already broken) and run the code in the in-game console that you wrote down earlier (point 4).
+5. Load your last save (the one where the relationship is already broken) and run the code in-game console that you wrote down earlier (point 4).
 
 > [!NOTE]
 > **The console opens with the `~` (<code>`</code>) key when...**
