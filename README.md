@@ -275,52 +275,145 @@ end
 Class GS
 {
    /* Загрузка сохранения */
-   [M] void LoadGame( const char* SaveDirPATH )   /* Загружает выбранное сохранение. Указывается путь до папки сохранения [SaveDirPATH], например: ["data\\profiles\\Player\\saves\\00000065"] */
-   [M] void LoadCached()   /* Загружает закэшированные динамические объекты, которые невозможно загрузить сразу с [LoadGame()]: аффиксы и цены в магазинах, прочее. Перед использованием сделайте [LoadGame()] и сейвлоад! */
+
+   [M] void LoadGame( const char* SaveDirPATH )
+   /* Загружает выбранное сохранение.
+
+      Указывается путь до папки сохранения [SaveDirPATH], например:
+      ["data\\profiles\\Player\\saves\\00000065"] */
+
+   [M] void LoadCached()
+   /* Загружает закэшированные динамические объекты,
+      которые невозможно загрузить сразу с [LoadGame()]:
+
+      аффиксы и цены в магазинах, прочее.
+
+      Перед использованием сделайте [LoadGame()] и сейвлоад! */
+
 
    /* Восстановление отношений группировок */
-   [M] int LoadToleranceStatus( const char* CustomPathToCurrentMap )   /* Загружает отношения группировок из currentmap.xml желаемого сохранения. Загрузит отношения по умолчанию из relationship.xml, если [CustomPathToCurrentMap] = nil. Полезно, если у вас сломались отношения группировок - не нужно загружать ранние сейвы! Старое описание: --Чинит сломанные отношения после бага с RestoreAllToleranceStatus() когда все становятся мирными/врагами/хикками/моддерами. */
-   [M] int LoadToleranceStatusBackup()       /* Загружает сохраненные отношения группировок из tolerance.bak */
-   [M] int SaveToleranceStatusBackup()       /* Сохраняет текущие отношения группировок в tolerance.bak */
+
+   [M] int LoadToleranceStatus( const char* CustomPathToCurrentMap )
+   /* Загружает отношения группировок из currentmap.xml желаемого сохранения.
+
+   Загрузит отношения по умолчанию из relationship.xml, если [CustomPathToCurrentMap] = nil.
+
+   Полезно, если у вас сломались отношения группировок - не нужно загружать ранние сейвы!
+   Старое описание:
+      --Чинит сломанные отношения после бага с RestoreAllToleranceStatus() когда все становятся мирными/врагами/хикками/моддерами. */
+
+   [M] int LoadToleranceStatusBackup()
+   /* Загружает сохраненные отношения группировок из tolerance.bak */
+
+   [M] int SaveToleranceStatusBackup()
+   /* Сохраняет текущие отношения группировок в tolerance.bak */
+
 
    /* Восстановление объекта */
-   [M] AIParam CreateAndSetObjectFrom( const char* ObjectName, CVector NewPosition, const char* CustomPATHtoCurrentMap )     /* Загружает любой объект из currentmap.xml желаемого сохранения, если это возможно. Объект появится в своей позиции, если [NewPosition] = nil. Загрузит объект из последнего сделанного/загруженного сохранения (сделайте [UpdateLastSavePATH("путь_к_сохранению")] либо [LoadGame()]), если [CustomPATHtoCurrentMap] = nil. Возвращает объект или статус */
+
+   [M] AIParam CreateAndSetObjectFrom( const char* ObjectName, CVector NewPosition, const char* CustomPATHtoCurrentMap )
+   /* Загружает любой объект из currentmap.xml желаемого сохранения, если это возможно.
+
+      Объект появится в своей позиции, если [NewPosition] = nil.
+
+      Загрузит объект из последнего сделанного/загруженного сохранения
+      (сделайте [UpdateLastSavePATH("путь_к_сохранению")] либо [LoadGame()]),
+      если [CustomPATHtoCurrentMap] = nil.
+
+      Возвращает объект или статус */
+
 
    /* Получение и обновление информации о сохранениях */
-   [M] tuple GetSaveFile( string ByLOGline )    /* Возвращает имя и путь сохранения по совпадению внутри строки [ByLOGline] из exmachina.log */
-   [M] tuple GetLoadedSaveName()    /* Возвращает имя последнего загруженного сохранения и путь к нему */
-   [M] tuple GetSavedFileName()     /* Возвращает имя последнего сделанного сохранения и путь к нему */
-   [M] void UpdateLastSavePATH( const char* PATH )   /* Обновляет путь последнего сохранения для GameSave и GS */
+
+   [M] tuple GetSaveFile( string ByLOGline )
+   /* Возвращает имя и путь сохранения по совпадению внутри строки [ByLOGline] из exmachina.log */
+
+   [M] tuple GetLoadedSaveName()
+   /* Возвращает имя последнего загруженного сохранения и путь к нему */
+
+   [M] tuple GetSavedFileName()
+   /* Возвращает имя последнего сделанного сохранения и путь к нему */
+
+   [M] void UpdateLastSavePATH( const char* PATH )
+   /* Обновляет путь последнего сохранения для GameSave и GS */
+
 
    /* Переменные */
-   [V] string LastSave_PATH     /* Хранит путь к последнему файлу сохранения GameSave */
+
+   [V] string LastSave_PATH
+   /* Хранит путь к последнему файлу сохранения GameSave */
+
 
    /* Игрок из сохранения */
-   [M] table GetPlayerFrom( const char* CustomPathToCurrentMap )     /* Возвращает XMLParser-объект игрока из currentmap.xml желаемого сохранения */
-   [M] AIParam GetFromSavedPlayer( const table xml_player, const char* CustomPATHtoCurrentMap, string ItemTag, string ItemProperty, string ItemPropertyValue, string PlayerProperty )		/* Возвращает child или параметр [PlayerProperty] игрока из currentmap.xml желаемого сохранения. Укажите XMLParser-объект игрока [xml_player] для оптимизации кода, возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil. Найдет child по [ItemTag], [ItemProperty] и [ItemPropertyValue]. [PlayerProperty] может быть: "Money", "Belong" и т.п */
-   [M] AIParam GetPlayerAttr( const table xml_player, const char* CustomPATHtoCurrentMap, string FindAttr )    /* Возвращает параметр [FindAttr] игрока из currentmap.xml желаемого сохранения. Укажите XMLParser-объект игрока [xml_player] для оптимизации кода, возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil. [FindAttr] может быть: "Money", "Belong" и т.п */
+
+   [M] table GetPlayerFrom( const char* CustomPathToCurrentMap )
+   /* Возвращает XMLParser-объект игрока из currentmap.xml желаемого сохранения */
+
+   [M] AIParam GetFromSavedPlayer( const table xml_player, const char* CustomPATHtoCurrentMap, string ItemTag, string ItemProperty, string ItemPropertyValue, string PlayerProperty )
+   /* Возвращает child или параметр [PlayerProperty] игрока из currentmap.xml желаемого сохранения.
+
+      Укажите XMLParser-объект игрока [xml_player] для оптимизации кода,
+      возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil.
+
+      Найдет child по [ItemTag], [ItemProperty] и [ItemPropertyValue].
+      [PlayerProperty] может быть: "Money", "Belong" и т.п */
+
+   [M] AIParam GetPlayerAttr( const table xml_player, const char* CustomPATHtoCurrentMap, string FindAttr )
+   /* Возвращает параметр [FindAttr] игрока из currentmap.xml желаемого сохранения.
+
+      Укажите XMLParser-объект игрока [xml_player] для оптимизации кода,
+      возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil.
+      [FindAttr] может быть: "Money", "Belong" и т.п */
+
 
    /* Машина игрока из сохранения */
    Class PlayerVehicle
    {
-      [M] PlayerVehicle GetPlayerVehicle( const table xml_player, const char* CustomPATHtoCurrentMap, string VehicleName ) : public GS     /* Это прямое обращение к машине игрока. Укажите XMLParser-объект игрока [xml_player] для оптимизации кода, возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil. [VehicleName] может быть nil */
+      [M] PlayerVehicle GetPlayerVehicle( const table xml_player, const char* CustomPATHtoCurrentMap, string VehicleName ) : public GS
+      /* Это прямое обращение к машине игрока.
+
+         Укажите XMLParser-объект игрока [xml_player] для оптимизации кода,
+         возьмет из сохранения [CustomPATHtoCurrentMap] снова, если [xml_player] = nil.
+         [VehicleName] может быть nil */
       {
-         [M] table GetRuntime()    /* Возвращает XMLParser-объект содержимого Runtime машины */
-         [M] table GetAllProperties()    /* Возвращает все Property машины */
-         [M] AIParam GetProperty( string PropertyName )     /* Возвращает Property машины с именем [PropertyName]. Может быть числом или строкой */
-         [M] table GetRepository()       /* Возвращает XMLParser-объект содержимого Repository машины */
-         [M] table GetRepositoryAsPrototypes()    /* Возвращает содержимое инвентаря машины */
-         [M] int GetRepositoryItemAmount( string ItemPrototype )      /* Возвращает количество предметов с прототипом [ItemPrototype] инвентаря машины */
-         [M] table GetParts()      /* Возвращает XMLParser-объект содержимого Parts машины */
-         [M] table GetPartByName( string PartName )     /* Возвращает Part машины с именем [PartName] */
-         [M] table GetGadgets()    /* Возвращает все гаджеты машины */
-         [M] table GetWheels()     /* Возвращает все колеса машины */
+         [M] table GetRuntime()
+         /* Возвращает XMLParser-объект содержимого Runtime машины */
+
+         [M] table GetAllProperties()
+         /* Возвращает все Property машины */
+
+         [M] AIParam GetProperty( string PropertyName )
+         /* Возвращает Property машины с именем [PropertyName]. Может быть числом или строкой */
+
+         [M] table GetRepository()
+         /* Возвращает XMLParser-объект содержимого Repository машины */
+
+         [M] table GetRepositoryAsPrototypes()
+         /* Возвращает содержимое инвентаря машины */
+
+         [M] int GetRepositoryItemAmount( string ItemPrototype )
+         /* Возвращает количество предметов с прототипом [ItemPrototype] инвентаря машины */
+
+         [M] table GetParts()
+         /* Возвращает XMLParser-объект содержимого Parts машины */
+
+         [M] table GetPartByName( string PartName )
+         /* Возвращает Part машины с именем [PartName] */
+
+         [M] table GetGadgets()
+         /* Возвращает все гаджеты машины */
+
+         [M] table GetWheels()
+         /* Возвращает все колеса машины */
       }
    }
 }
 
+
 /* Глобальная сервисная функция. По возможности не используйте */
-[F] void GameSaveFakeCoroutineScript()      /* Выполняет "скрипт-корутину" для загрузчика GameSave */
+
+[F] void GameSaveFakeCoroutineScript()
+/* Выполняет "скрипт-корутину" для загрузчика GameSave */
 ```
 <a id="howToLoadSaveFile_ru"></a><a href="#top">Наверх ↑</a>
 
@@ -576,52 +669,143 @@ Some methods return table XMLParser objects. User data is not returned, so for p
 Class GS
 {
    /* Load save */
-   [M] void LoadGame( const char* SaveDirPATH )   /* Loads the selected save. The path to the save folder [SaveDirPATH] is specified, for example: ["data\\profiles\\Player\\saves\\00000065"] */
-   [M] void LoadCached()   /* Loads cached dynamic objects that cannot be loaded immediately from [LoadGame()]: affixes and prices in stores, etc. Before using it, do [LoadGame()] and saveload! */
+
+   [M] void LoadGame( const char* SaveDirPATH )
+   /* Loads the selected save.
+
+      The path to the save folder [SaveDirPATH] is specified, for example:
+      ["data\\profiles\\Player\\saves\\00000065"] */
+
+   [M] void LoadCached()
+   /* Loads cached dynamic objects that cannot be loaded immediately from [LoadGame()]:
+      affixes and prices in stores, etc.
+
+      Before using it, do [LoadGame()] and saveload! */
+
 
    /* Load gangs relationships */
-   [M] int LoadToleranceStatus( const char* CustomPathToCurrentMap )   /* Loads the relationships of gangs from currentmap.xml the desired preservation. Loads the default relationship from relationship.xml if [CustomPathToCurrentMap] = nil. It's useful if your gangs relationships are broken - you don't need to load early saves! Old description: --Fixes broken relationships after a bug with RestoreAllToleranceStatus() when everyone becomes peaceful/enemies/hicks/modders. */
-   [M] int LoadToleranceStatusBackup()       /* Loads saved gangs relationships from tolerance.bak */
-   [M] int SaveToleranceStatusBackup()       /* Saves saved gangs relationships to tolerance.bak */
+
+   [M] int LoadToleranceStatus( const char* CustomPathToCurrentMap )
+   /* Loads the relationships of gangs from currentmap.xml the desired preservation.
+
+      Loads the default relationship from relationship.xml if [CustomPathToCurrentMap] = nil.
+      It's useful if your gangs relationships are broken - you don't need to load early saves!
+      Old description:
+         --Fixes broken relationships after a bug with RestoreAllToleranceStatus() when everyone becomes peaceful/enemies/hicks/modders. */
+
+   [M] int LoadToleranceStatusBackup()
+   /* Loads saved gangs relationships from tolerance.bak */
+
+   [M] int SaveToleranceStatusBackup()
+   /* Saves saved gangs relationships to tolerance.bak */
+
 
    /* Load object */
-   [M] AIParam CreateAndSetObjectFrom( const char* ObjectName, CVector NewPosition, const char* CustomPATHtoCurrentMap )     /* Loads any object from currentmap.xml the desired preservation, if possible. The object will appear in its position if [newPosition] = nil. Loads the object from the last made/uploaded save (do [UpdateLastSavePATH("save_path")] or [LoadGame()]) if [CustomPATHtoCurrentMap] = nil. Returns an object or status */
+
+   [M] AIParam CreateAndSetObjectFrom( const char* ObjectName, CVector NewPosition, const char* CustomPATHtoCurrentMap )
+   /* Loads any object from currentmap.xml the desired preservation, if possible.
+
+      The object will appear in its position if [newPosition] = nil.
+
+      Loads the object from the last made/uploaded save
+      (do [UpdateLastSavePATH("save_path")] or [LoadGame()])
+      if [CustomPATHtoCurrentMap] = nil.
+
+      Returns an object or status */
+
 
    /* Getting and updating information about saves */
-   [M] tuple GetSaveFile( string ByLOGline )    /* Returns the name and path of the save by coincidence inside the string [ByLOGline] from exmachina.log */
-   [M] tuple GetLoadedSaveName()    /* Returns the name of the last uploaded save and the path to it */
-   [M] tuple GetSavedFileName()     /* Returns the name of the last save made and the path to it */
-   [M] void UpdateLastSavePATH( const char* PATH )   /* Updates the last save path for GameSave and GS */
+
+   [M] tuple GetSaveFile( string ByLOGline )
+   /* Returns the name and path of the save by coincidence inside the string [ByLOGline] from exmachina.log */
+
+   [M] tuple GetLoadedSaveName()
+   /* Returns the name of the last uploaded save and the path to it */
+
+   [M] tuple GetSavedFileName()
+   /* Returns the name of the last save made and the path to it */
+
+   [M] void UpdateLastSavePATH( const char* PATH )
+   /* Updates the last save path for GameSave and GS */
+
 
    /* Variables */
-   [V] string LastSave_PATH     /* Stores the path to the last save file GameSave */
+
+   [V] string LastSave_PATH
+   /* Stores the path to the last save file GameSave */
+
 
    /* Player from save */
-   [M] table GetPlayerFrom( const char* CustomPathToCurrentMap )     /* Returns the XMLParser object of the player from currentmap.xml the desired save */
-   [M] AIParam GetFromSavedPlayer( const table xml_player, const char* CustomPATHtoCurrentMap, string ItemTag, string ItemProperty, string ItemPropertyValue, string PlayerProperty )		/* Returns the child or [PlayerProperty] parameter of the player from currentmap.xml the desired save. Specify the XMLParser object of the player [xml_player] to optimize the code, or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil. It will find child by [ItemTag], [ItemProperty] and [ItemPropertyValue]. [PlayerProperty] can be: "Money", "Belong", etc. */
-   [M] AIParam GetPlayerAttr( const table xml_player, const char* CustomPATHtoCurrentMap, string FindAttr )    /* Returns the [FindAttr] parameter of the player from currentmap.xml the desired save. Specify the XMLParser object of the player [xml_player] to optimize the code, or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil. [FindAttr] can be: "Money", "Belong", etc. */
+
+   [M] table GetPlayerFrom( const char* CustomPathToCurrentMap )
+   /* Returns the XMLParser object of the player from currentmap.xml the desired save */
+
+   [M] AIParam GetFromSavedPlayer( const table xml_player, const char* CustomPATHtoCurrentMap, string ItemTag, string ItemProperty, string ItemPropertyValue, string PlayerProperty )
+   /* Returns the child or [PlayerProperty] parameter of the player from currentmap.xml the desired save.
+
+      Specify the XMLParser object of the player [xml_player] to optimize the code,
+      or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil.
+
+      It will find child by [ItemTag], [ItemProperty] and [ItemPropertyValue].
+      [PlayerProperty] can be: "Money", "Belong", etc. */
+
+   [M] AIParam GetPlayerAttr( const table xml_player, const char* CustomPATHtoCurrentMap, string FindAttr )
+   /* Returns the [FindAttr] parameter of the player from currentmap.xml the desired save.
+
+      Specify the XMLParser object of the player [xml_player] to optimize the code,
+      or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil.
+
+      [FindAttr] can be: "Money", "Belong", etc. */
+
 
    /* Player vehicle from save */
    Class PlayerVehicle
    {
-      [M] PlayerVehicle GetPlayerVehicle( const table xml_player, const char* CustomPATHtoCurrentMap, string VehicleName ) : public GS     /* This is a direct appeal to the player's car. Specify the XMLParser object of the player [xml_player] to optimize the code, or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil. [VehicleName] may be nil */
+      [M] PlayerVehicle GetPlayerVehicle( const table xml_player, const char* CustomPATHtoCurrentMap, string VehicleName ) : public GS
+      /* This is a direct appeal to the player's car.
+
+         Specify the XMLParser object of the player [xml_player] to optimize the code,
+         or it will take [CustomPATHtoCurrentMap] from the save again if [xml_player] = nil.
+         [VehicleName] may be nil */
       {
-         [M] table GetRuntime()    /* Returns the XMLParser object of the Runtime vehicle content */
-         [M] table GetAllProperties()    /* Returns all the properties of the vehicle */
-         [M] AIParam GetProperty( string PropertyName )     /* Returns the Property of the vehicle with the name [propertyName]. It can be a number or a string */
-         [M] table GetRepository()       /* Returns the XMLParser object of the contents of the Repository of the vehicle */
-         [M] table GetRepositoryAsPrototypes()    /* Returns the contents of the vehicle inventory */
-         [M] int GetRepositoryItemAmount( string ItemPrototype )      /* Returns the number of items with the prototype [ItemPrototype] of the vehicle inventory */
-         [M] table GetParts()      /* Returns the XMLParser object of the Parts content of the vehicle */
-         [M] table GetPartByName( string PartName )     /* Returns the Part of the vehicle named [PartName] */
-         [M] table GetGadgets()    /* Returns all the gadgets of the vehicle */
-         [M] table GetWheels()     /* Returns all the wheels of the vehicle */
+         [M] table GetRuntime()
+         /* Returns the XMLParser object of the Runtime vehicle content */
+
+         [M] table GetAllProperties()
+         /* Returns all the properties of the vehicle */
+
+         [M] AIParam GetProperty( string PropertyName )
+         /* Returns the Property of the vehicle with the name [propertyName]. It can be a number or a string */
+
+         [M] table GetRepository()
+         /* Returns the XMLParser object of the contents of the Repository of the vehicle */
+
+         [M] table GetRepositoryAsPrototypes()
+         /* Returns the contents of the vehicle inventory */
+
+         [M] int GetRepositoryItemAmount( string ItemPrototype )
+         /* Returns the number of items with the prototype [ItemPrototype] of the vehicle inventory */
+
+         [M] table GetParts()
+         /* Returns the XMLParser object of the Parts content of the vehicle */
+
+         [M] table GetPartByName( string PartName )
+         /* Returns the Part of the vehicle named [PartName] */
+
+         [M] table GetGadgets()
+         /* Returns all the gadgets of the vehicle */
+
+         [M] table GetWheels()
+         /* Returns all the wheels of the vehicle */
       }
    }
 }
 
+
 /* Global service function. If possible, do not use */
-[F] void GameSaveFakeCoroutineScript()      /* Performs a "script coroutine" for the GameSave loader */
+
+[F] void GameSaveFakeCoroutineScript()
+/* Performs a "script coroutine" for the GameSave loader */
 ```
 <a id="howToLoadSaveFile_en"></a><a href="#top">Go up ↑</a>
 
