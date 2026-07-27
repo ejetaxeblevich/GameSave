@@ -55,11 +55,10 @@
     </tr>
   </tbody>
 </table>
+
 </div>
 
 ***
-
-</div>
 
 <a id="wtf_ru"></a>
 
