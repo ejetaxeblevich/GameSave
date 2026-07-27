@@ -4,10 +4,10 @@
 
 # GameSave.lua
 
-***ЗАГРУЗОЧНЫЙ LUA-МОДУЛЬ,*** *Написанный специально для игры Ex Machina*
+***ЗАГРУЗОЧНЫЙ LUA-МОДУЛЬ,*** *написанный специально для игры [Ex Machina](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
 
-***THE LOADING LUA-MODULE,*** *Written specifically for the game Hard Truck Apocalypse*
+***THE LOADING LUA-MODULE,*** *written specifically for the game [Hard Truck Apocalypse](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
 <img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
