@@ -11,8 +11,6 @@
 
 <img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
-</div>
-
 ***
 
 <table>
@@ -60,6 +58,8 @@
 </div>
 
 ***
+
+</div>
 
 <a id="wtf_ru"></a>
 
