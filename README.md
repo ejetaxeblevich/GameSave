@@ -9,7 +9,7 @@
 
 ***THE LOADING LUA-MODULE,*** *Written specifically for the game Hard Truck Apocalypse*
 
-<img src="exm_gamesave_logo.png" width="450" />
+<img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
 </div>
 
