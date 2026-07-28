@@ -9,6 +9,8 @@
 
 ***THE LOADING LUA-MODULE,*** *written specifically for the game [Hard Truck Apocalypse](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
+**Lua 5.0**
+
 <img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
 ***
