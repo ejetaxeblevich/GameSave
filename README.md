@@ -68,6 +68,8 @@
 
 Этот lua-модуль позволяет **ЗАГРУЗИТЬ** желаемое сохранение, **восстановить отношения группировок**, а также узнать информацию о игроке.
 
+> Задача lua-модуля - попробовать помочь игрокам восстановить утерянный прогресс, а также как-то упростить работу участникам сообщества в создании модификаций, если им сложно реализовать что-то самостоятельно.
+
 ### ВОЗМОЖНОСТИ
 - Загрузка любого желаемого сохранения!
 - Восстановление испорченных отношений группировок после бага!
@@ -462,9 +464,11 @@ Class GS
 
 This lua module allows you to **LOAD** the desired save, **restore gangs relationships from bug**, and also find out information about the player.
 
+>  The task of the lua module is to try to help players restore lost progress, as well as somehow simplify the work of community members in creating modifications if it is difficult for them to implement something on their own.
+
 ### FEATURES
 - Loading any desired save!
-- Restoring damaged group relationships after a bug!
+- Restoring damaged groups relationship after a bug!
 - Restore any object from save!
 - Getting information about the player from the save!
 
