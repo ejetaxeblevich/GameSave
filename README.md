@@ -97,7 +97,9 @@ GS = require("data\\gamesave.lua")
 
 **Теперь вам нужно выбрать один из двух вариантов восстановления отношений группировок:**
 
-А. Для использования отношений по умолчанию, как при старте "новой игры" - введите в консоли `GS:LoadToleranceStatus()`
+А. Для использования отношений по умолчанию, как при старте "новой игры":
+
+1. Запустите игру и загрузите ваше последнее сохранение (то, где отношения уже сломаны) и выполните во внутриигровой консоли код `GS:LoadToleranceStatus()`
 
 *или*
 
@@ -493,7 +495,9 @@ GS = require("data\\gamesave.lua")
 
 **Now you need to choose one of the two options for restoring the grouping relationship:**
 
-A. To use the default relationship, as when starting a "new game", type `GS:LoadToleranceStatus()` in-game console.
+A. To use default relationships, as when starting a "new game":
+
+1. Start the game and load your last save (the one where the relationship is already broken) and run code in-game console `GS:LoadToleranceStatus()`
 
 *or*
 
