@@ -11,7 +11,7 @@
 
 <a id="top"></a>
 
-![GameSaveVersion](https://img.shields.io/badge/Latest%20version-2.2-blue) ![GameSaveDownloads](https://img.shields.io/badge/Total%20downloads-0%2B-gray)
+![GameSaveVersion](https://img.shields.io/badge/Latest%20version-1.1.1-blue) ![GameSaveDownloads](https://img.shields.io/badge/Total%20downloads-0%2B-gray)
 
 <img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
