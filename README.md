@@ -11,7 +11,7 @@
 
 <a id="top"></a>
 
-![GameSaveVersion](https://img.shields.io/badge/Latest%20version-1.1.1-blue) ![GameSaveDownloads](https://img.shields.io/badge/Total%20downloads-1%2B-gray)
+![GameSaveStatus](https://img.shields.io/badge/Status-Beta-brown?style=for-the-badge) ![GameSaveVersion](https://img.shields.io/badge/Latest%20version-1.1.1-blue?style=for-the-badge) ![GameSaveDownloads](https://img.shields.io/github/downloads/ejetaxeblevich/GameSave/total?label=Total%20downloads&color=gray&style=for-the-badge)
 
 <img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
 
