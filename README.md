@@ -80,6 +80,10 @@
 
 <a id="howToFixRelationship_ru"></a>
 
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
+
 ### Инструкция для игроков, чтобы починить отношения группировок после бага. Это займет 5-10 минут:
 *Может показаться сложно, но если вы далеко ушли с таким багом, это того стоит.*
 
@@ -129,7 +133,11 @@ GS = require("data\\gamesave.lua")
 > [!WARNING]
 > Такой способ не лишен бага: Если вы играете в мод, который где-то запрашивает статус отношений, вы можете словить **софтлок**. В таком случае вы все сделали зря и придется загружать раннее сохранение и проходить игру снова :)
 
-<a id="allAboutIt_ru"></a><a href="#top">Наверх ↑</a>
+<a id="allAboutIt_ru"></a>
+
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
 
 ## Ниже инструкции для моддеров!
 
@@ -197,7 +205,11 @@ if not GS then
 end
 ```
 
-<a id="whatCanThisLoad_ru"></a><a href="#top">Наверх ↑</a>
+<a id="whatCanThisLoad_ru"></a>
+
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
 
 ## Что ВОЗМОЖНО ЗАГРУЗИТЬ на текущий момент
 - \*Чистую карту;
@@ -246,7 +258,11 @@ end
 - ***ЗАПРЕЩАЕТСЯ*** использовать этот lua-модуль в своих модах без указания авторства. А то натравлю порчу и наколдую недельный понос 😡
 *Шутка 💋*
 
-<a id="allFunctions_ru"></a><a href="#top">Наверх ↑</a>
+<a id="allFunctions_ru"></a>
+
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
 
 ## ФУНКЦИИ И МЕТОДЫ
 
@@ -423,7 +439,11 @@ Class GS
 [F] void GameSaveFakeCoroutineScript()
 /* Выполняет "скрипт-корутину" для загрузчика GameSave */
 ```
-<a id="howToLoadSaveFile_ru"></a><a href="#top">Наверх ↑</a>
+<a id="howToLoadSaveFile_ru"></a>
+
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
 
 ## КАК ЗАГРУЗИТЬ СОХРАНЕНИЕ
 0. Если вы можете в настоящем времени перезапустить игру - перезапустите ее. Пусть и вызывается очистка перед "загрузкой" сохранения, полная перезагрузка не помешает;
@@ -456,7 +476,9 @@ Class GS
 - ***EmerEh*** за идею!
 - ***Traygen*** за исправление формулировки инструкции <a href="#howToFixRelationship_ru">Как починить отношения группировок после бага (инструкция для игроков)</a>!
 
-<a href="#top">Наверх ↑</a>
+<div align="right">
+  <a href="#top">Наверх ↑</a>
+</div>
 
 ----
 
@@ -476,7 +498,11 @@ This lua module allows you to **LOAD** the desired save, **restore gangs relatio
 - Restore any object from save!
 - Getting information about the player from the save!
 
-<a id="howToFixRelationship_en"></a></a><a href="#top">Go up ↑</a>
+<a id="howToFixRelationship_en"></a>
+
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
 
 ### Instructions for players to fix group relationships after a bug. It will take 5-10 minutes:
 *It may seem difficult, but if you have gone far in gameplay with this bug, it is worth it.*
@@ -527,7 +553,11 @@ B. To return the relationship from the old save file, in which they still worked
 > [!WARNING]
 > This method is not without a bug: If you are playing a mod that asks for relationship status somewhere, you can catch **softlock**. In this case, you did everything in vain and you will have to load the early save and play the game again :)
 
-<a id="allAboutIt_en"></a><a href="#top">Go up ↑</a>
+<a id="allAboutIt_en"></a>
+
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
 
 ## Below are the instructions for modders!
 
@@ -595,7 +625,11 @@ if not GS then
 end
 ```
 
-<a id="whatCanThisLoad_en"></a><a href="#top">Go up ↑</a>
+<a id="whatCanThisLoad_en"></a>
+
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
 
 ## What is POSSIBLE to LOAD at the moment
 - \*A blank level;
@@ -644,7 +678,11 @@ All these loads can be configured separately in the `LOADER CONFIG`.
 - ***FORBIDDEN*** to use this lua module in your mods without attribution. Otherwise, I'll set off a spell and conjure up a week's diarrhea.
 *A joke 💋*
 
-<a id="allFunctions_en"></a><a href="#top">Go up ↑</a>
+<a id="allFunctions_en"></a>
+
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
 
 ## FUNCTIONS AND METHODS
 
@@ -819,7 +857,11 @@ Class GS
 [F] void GameSaveFakeCoroutineScript()
 /* Performs a "script coroutine" for the GameSave loader */
 ```
-<a id="howToLoadSaveFile_en"></a><a href="#top">Go up ↑</a>
+<a id="howToLoadSaveFile_en"></a>
+
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
 
 ## HOW TO LOAD A SAVE
 0. If you can restart the game in the present tense, restart it. Even if the cleanup is called before "loading" the save, a full reboot won't hurt;
@@ -852,4 +894,6 @@ You can find this and other information in the project file or find examples of 
 - ***EmerEh*** for the idea!
 - ***Traygen*** for correcting the wording of the instruction <a href="#howToFixRelationship_en">How to fix gangs relationship after a bug (instructions for players)</a>!
 
-<a href="#top">Go up ↑</a>
+<div align="right">
+  <a href="#top">Go up ↑</a>
+</div>
