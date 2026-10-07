@@ -4,16 +4,24 @@
 
 ***ЗАГРУЗОЧНЫЙ LUA-МОДУЛЬ,*** *написанный специально для игры [Ex Machina](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
-
 ***THE LOADING LUA-MODULE,*** *written specifically for the game [Hard Truck Apocalypse](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
 **Lua 5.0**
 
+<a href="https://github.com/ejetaxeblevich/GameSave/releases"><img src="https://img.shields.io/badge/Статус-Бета-brown?style=for-the-badge" alt="GameSaveStatus"/></a> 
+<a href="https://github.com/ejetaxeblevich/GameSave/releases/tag/260723a"><img src="https://img.shields.io/badge/Последняя%20версия-1.1.1-blue?style=for-the-badge" alt="GameSaveVersion"/></a> 
+<a href="https://tooomm.github.io/github-release-stats"><img src="https://img.shields.io/github/downloads/ejetaxeblevich/GameSave/total?label=%D0%92%D1%81%D0%B5%D0%B3%D0%BE%20%D1%81%D0%BA%D0%B0%D1%87%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9&amp;color=gray&amp;style=for-the-badge" alt="GameSaveDownloads"/></a> 
+
+<img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="550" />
+
+***
+
 <a id="top"></a>
 
-![GameSaveStatus](https://img.shields.io/badge/Status-Beta-brown?style=for-the-badge) ![GameSaveVersion](https://img.shields.io/badge/Latest%20version-1.1.1-blue?style=for-the-badge) ![GameSaveDownloads](https://img.shields.io/github/downloads/ejetaxeblevich/GameSave/total?label=Total%20downloads&color=gray&style=for-the-badge)
-
-<img src="exm_gamesave_logo.png" alt="exm_gamesave_logo_png" width="450" />
+<div>
+  <h3>Обсуждение и техподдержка / Discussion and support</h3>
+  <a href="https://forum.deuswiki.com/t/lua-moduli-sborniki-gotovyh-skriptov/3161/12?u=axeble"><img src="https://img.shields.io/badge/DeusWiki%20Forum-333333?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODYgMTg2Ij48cGF0aCBmaWxsPSIjRkZBNTAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0gNzcgNCBMIDU5IDkgTCA0NyAxNSBMIDMwIDI4IEwgMTkgNDEgTCAxMCA1NyBMIDUgNzIgTCAzIDg1IEwgNCAxMDggTCA5IDEyNiBMIDE3IDE0MSBMIDIyIDE0OCBMIDM4IDE2NCBMIDUzIDE3MyBMIDY5IDE3OSBMIDc5IDE4MSBMIDEwNiAxODEgTCAxMjUgMTc2IEwgMTM5IDE2OSBMIDE0OSAxNjIgTCAxNjUgMTQ1IEwgMTc1IDEyNyBMIDE4MCAxMTEgTCAxODEgNzkgTCAxNzggNjYgTCAxNjkgNDYgTCAxNjEgMzUgTCAxNDUgMjAgTCAxMjcgMTAgTCAxMTEgNSBMIDk4IDMgWiBNIDE0MCAxNDMgTCAxMjUgMTU1IEwgMTE0IDE2MCBMIDEwMCAxNjMgTCA4NSAxNjMgTCA3NCAxNjEgTCA1OCAxNTQgTCA0OCAxNDcgTCAzOCAxMzcgTCAzNiAxMzIgTCA5OSAxMzEgTCAxMTMgMTExIEwgMTE3IDEwOCBMIDEzNiAxMzUgWiBNIDU0IDcyIEwgOTEgNzIgTCAxMDMgOTIgTCA4OSAxMTQgTCA1MyAxMTMgTCA1NCAxMDAgTCA4NyAxMDAgTCA4NyA4NSBMIDU0IDg1IFogTSAzMiA2MSBMIDMzIDExMyBMIDI3IDExNCBMIDIzIDEwMyBMIDIzIDg0IEwgMjcgNjggTCAzMCA2MiBaIE0gMTUxIDU4IEwgMTUzIDU5IEwgMTU3IDY3IEwgMTYxIDgxIEwgMTYxIDEwNSBMIDE1NyAxMTkgTCAxNTIgMTI3IEwgMTMwIDkzIFogTSA1MiAzNyBMIDU4IDMyIEwgNzQgMjUgTCA4MyAyMyBMIDEwMSAyMyBMIDExOSAyOCBMIDEyNyAzMiBMIDEzOCA0MCBMIDEzOSA0MyBMIDEyMiA2OSBMIDExNiA3NSBMIDEwMCA1NCBMIDUzIDU0IFoiLz48L3N2Zz4%3D" width="250" height="36" alt="Deuswiki topic"/></a>
+</div>
 
 ***
 
@@ -60,9 +68,9 @@
   </tbody>
 </table>
 
-</div>
-
 ***
+
+</div>
 
 <a id="wtf_ru"></a>
 
