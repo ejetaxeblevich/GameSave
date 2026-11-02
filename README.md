@@ -300,7 +300,9 @@ end
 > [!IMPORTANT]
 > **Обратите внимание**, что дочерний класс должен вызывать главный метод своего родительского класса вплоть до GS.
 
-> [!TIP]
+<details>
+<summary><h3>Развернуть/свернуть список функций и методов</h3></summary>
+
 > Вы можете скроллить код ниже вправо и влево! Наведите курсор на полотно и колесиком мыши с помощью `shift` двигайте его!
 
 ```c
@@ -447,6 +449,9 @@ Class GS
 [F] void GameSaveFakeCoroutineScript()
 /* Выполняет "скрипт-корутину" для загрузчика GameSave */
 ```
+
+</details>
+
 <a id="howToLoadSaveFile_ru"></a>
 
 <div align="right">
@@ -720,7 +725,9 @@ Some methods return table XMLParser objects. User data is not returned, so for p
 > [!IMPORTANT]
 > That a child class must call the main method of its parent class up to GS.
 
-> [!TIP]
+<details>
+<summary><h3>Expand/collapse the list of functions and methods</h3></summary>
+
 > You can scroll the code below to the right and left! Hover the cursor over the canvas and use the mouse wheel to move it using `shift`!
 
 ```c
@@ -865,6 +872,9 @@ Class GS
 [F] void GameSaveFakeCoroutineScript()
 /* Performs a "script coroutine" for the GameSave loader */
 ```
+
+</details>
+
 <a id="howToLoadSaveFile_en"></a>
 
 <div align="right">
