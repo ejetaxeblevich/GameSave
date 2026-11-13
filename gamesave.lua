@@ -1,33 +1,33 @@
 -- ============================================================
 -- ============================================================
--- 
--- 
---                  ЗАГРУЗОЧНЫЙ LUA-МОДУЛЬ,
--- 
---               написанный специально для игры
+--
+--
+--                 ЗАГРУЗОЧНАЯ LUA-БИБЛИОТЕКА,
+--
+--               написанная специально для игры
 --             Ex Machina / Hard Truck Apocalypse
 --
---                      GameSave v1.1.1
--- 
--- 
+--                      GameSave v1.2.3
+--
+--
 -- ===================== Автор E Jet ==========================
 -- ============================================================
--- 
+--
 --     Note: Please translate this text, if it nessesary.
--- 
--- 
+--
+--
 -- ======================= ЧТО ЭТО ============================
 --
 --
---      Этот lua-модуль позволяет ЗАГРУЗИТЬ желаемое сохранение, 
--- восстановить отношения группировок, а также узнать информацию 
+--      Эта lua-библиотека позволяет ЗАГРУЗИТЬ желаемое сохранение,
+-- восстановить отношения группировок, а также узнать информацию
 -- о игроке.
 --
 --      Для работы требует lua-модуль XMLParser.lua версии v1.2.2
 -- от того же автора: https://github.com/ejetaxeblevich
 --      GameSave.lua должен запускаться после инициализации XMLParser,
 -- g_ObjCont, g_QuestStateManager и g_Player!
--- 
+--
 --------- \/ Что ВОЗМОЖНО ЗАГРУЗИТЬ на текущий момент \/ -----------
 --
 --     - *Чистую карту;
@@ -62,49 +62,49 @@
 ------------------------- Дисклеймер -----------------------
 --
 --      АВТОР ЭТОГО ТВОРЕНИЯ ДУМАЕТ, ЧТО ЗНАЕТ, КАК ПРАВИЛЬНО
--- НАЗЫВАТЬ И ИСПОЛЬЗОВАТЬ ВЕЩИ В ПРОГРАММИРОВАНИИ, ПОЭТОМУ 
--- ПРОСЬБА ДЛЯ ПРОГРАММИСТОВ ЗДОРОВОГО ЧЕЛОВЕКА - ПОНЯТЬ И 
--- ПРОСТИТЬ, ЕСЛИ ЗДЕСЬ ЧТО-ТО(ВСЕ) НЕ ТАК. 
+-- НАЗЫВАТЬ И ИСПОЛЬЗОВАТЬ ВЕЩИ В ПРОГРАММИРОВАНИИ, ПОЭТОМУ
+-- ПРОСЬБА ДЛЯ ПРОГРАММИСТОВ ЗДОРОВОГО ЧЕЛОВЕКА - ПОНЯТЬ И
+-- ПРОСТИТЬ, ЕСЛИ ЗДЕСЬ ЧТО-ТО(ВСЕ) НЕ ТАК.
 --      АВТОР ПОНИМАЕТ И ПРИНИМАЕТ, ЧТО ВЕСЬ КОД НИЖЕ И ЭТОТ
 -- ТЕКСТ НАПИСАН ПЛОХО, НЕПОНЯТНО И ГРОМОЗДКО, ЧТО ДАЖЕ В ЭТОМ
--- ЗАНЯТИИ НЕТ НИ МАЛЕЙШЕГО СМЫСЛА - КАК И СМЫСЛА В ЭТОМ КАПСОМ 
+-- ЗАНЯТИИ НЕТ НИ МАЛЕЙШЕГО СМЫСЛА - КАК И СМЫСЛА В ЭТОМ КАПСОМ
 -- НАПИСАННОМ ДИСКЛЕЙМЕРЕ.
 --
---      LUA-МОДУЛЬ РАСПРОСТРАНЯЕТСЯ СВОБОДНО "КАК ЕСТЬ" И 
--- ИСПОЛЬЗУЕТСЯ ИГРОЙ EX MACHINA / HARD TRUCK APOCALYPSE И МОЖЕТ 
--- БЫТЬ ИЗМЕНЕН ЛЮБЫМ ДРУГИМ ПОЛЬЗОВАТЕЛЕМ (МОДДЕРОМ) ВНУТРИ СВОИХ 
+--      LUA-БИБЛИОТЕКА РАСПРОСТРАНЯЕТСЯ СВОБОДНО "КАК ЕСТЬ" И
+-- ИСПОЛЬЗУЕТСЯ ИГРОЙ EX MACHINA / HARD TRUCK APOCALYPSE И МОЖЕТ
+-- БЫТЬ ИЗМЕНЕН ЛЮБЫМ ДРУГИМ ПОЛЬЗОВАТЕЛЕМ (МОДДЕРОМ) ВНУТРИ СВОИХ
 -- МОДИФИКАЦИЙ И ПРОЧИХ РЕСУРСАХ.
---      АВТОР НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ ЗА КАКИЕ-ЛИБО ПОСЛЕДСТВИЯ, 
+--      АВТОР НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ ЗА КАКИЕ-ЛИБО ПОСЛЕДСТВИЯ,
 -- ПОВЛЕКШИХ ЗА СОБОЙ УЩЕРБ ВО ВРЕМЯ ИСПОЛЬЗОВАНИЯ ЭТОГО, А
--- ТАКЖЕ ЛЮБОЙ ДРУГОЙ, В Т.Ч. ИЗМЕНЕННОЙ ВЕРСИИ LUA-МОДУЛЯ ИЛИ
+-- ТАКЖЕ ЛЮБОЙ ДРУГОЙ, В Т.Ч. ИЗМЕНЕННОЙ ВЕРСИИ LUA-БИБЛИОТЕКИ ИЛИ
 -- ЧАСТЕЙ КОДА, ПОЗАИМСТВОВАННЫХ (ПЕРЕПИСАННЫХ) ИЗ ЭТОГО ФАЙЛА.
--- 
+--
 ---------------------------------------------------------------
 --
 -- ============================================================
 --
 -- ================= КАК ЭТО ИСПОЛЬЗОВАТЬ =====================
--- 
--- 
---      Для полноценного lua-модуля этой поделке еще далеко, 
+--
+--
+--      Для полноценной lua-библиотеки этой поделке еще далеко,
 -- поэтому ее не нужно устанавливать как lua-библиотеку в системе.
--- 
---      В игру этот lua-модуль может загружаться только через 
+--
+--      В игру эта lua-библиотека может загружаться только через
 -- [require()]. Остальные способы НЕ ПОДОЙДУТ, так как необходимо
--- сохранение параметров модуля.
+-- сохранение параметров библиотеки.
 --
 --      Рекомендую прописывать команду в конец файла server.lua
--- игры, поскольку могут использоваться в модуле команды, которые 
+-- игры, поскольку могут использоваться в библиотеке команды, которые
 -- грузятся в игру чуть раньше сервера ("могут"? автор альцгеймер!).
 --
---      В качестве аргумента функции указывается локальный путь до 
--- файла модуля.
---      Инициализируемая таблица помещается в глобальную переменную, 
--- которая будет использована как объект, на который будут 
--- применяться методы (функции) этого модуля через двоеточие. 
+--      В качестве аргумента функции указывается локальный путь до
+-- файла библиотеки.
+--      Инициализируемая таблица помещается в глобальную переменную,
+-- которая будет использована как объект, на который будут
+-- применяться методы (функции) этой библиотеки через двоеточие.
 --
 -- Чтобы было понятнее, вспомним как мы обращаемся к машине игрока:
--- 
+--
 -- lua
 -- [[
 --      local Plv = GetPlayerVehicle()
@@ -120,8 +120,8 @@
 --      local Gde = CVector(1,2,3)
 --      local Gde.y = g_ObjCont:GetHeight(Gde.x, Gde.z)  --> метод на объект
 -- ]]
--- 
---      После загрузки модуля в игру уже можно начинать пользоваться его
+--
+--      После загрузки библиотеки в игру уже можно начинать пользоваться его
 -- методами и глобальныим командами.
 --
 -----------------------------------------------------------------
@@ -142,18 +142,18 @@
 --
 --
 --      НАСТОЯТЕЛЬНО РЕКОМЕНДУЕТСЯ проверить настройки конфига
--- модуля LOADER CONFIG в этом файле. Сравните с тем, что вы
+-- библиотеки LOADER CONFIG в этом файле. Сравните с тем, что вы
 -- используете и что у вас установлено!
 --      Особое внимание стоит уделить различным спискам прототипов
 -- из игры в [Default_GamePrototypes]. Это очень важно, если
--- модуль устанавливается поверх вашей модификации!
+-- библиотека устанавливается поверх вашей модификации!
 --
 --      ОБЯЗАТЕЛЬНО СЛЕДУЕТ произвести повторное сохранение на
 -- новый слот и его загрузку (сейвлоад) после "загрузки" игры с
--- помощью этого модуля.
+-- помощью этой библиотеки.
 --      Без этого происходит TRIGGER ERROR у триггеров с ивентами
--- на изменение/смерть машины/объекта (и не только), хотя и 
--- применяются их имена на загрузке. Возможно игре не нравится новый 
+-- на изменение/смерть машины/объекта (и не только), хотя и
+-- применяются их имена на загрузке. Возможно игре не нравится новый
 -- объект с другим айди, но с тем же именем.
 --      Также это необходимо для последующего корректного выполнения
 -- [GS:LoadCached()] для подгрузки аффиксов в магазинах и прочего.
@@ -168,13 +168,13 @@
 -- выбранного сохранения был бой, активная работа сторонних фич или
 -- тяжелых скриптов.
 --
---      Также не стоит полностью рассчитывать на возможности этого
--- модуля и игры в трудную минуту для восстановления игрового
+--      Также не стоит полностью рассчитывать на возможности этой
+-- библиотеки и игры в трудную минуту для восстановления игрового
 -- прогресса. Ничего не может работать идеально, особенно в Махине.
 --      Если у вас все прекрасно загрузилось и не возникло вообще
 -- никаких багов - вы везунчик!
 --
---      ЗАПРЕЩАЕТСЯ использовать этот lua-модуль в своих модах
+--      ЗАПРЕЩАЕТСЯ использовать эту lua-библиотеку в своих модах
 -- без указания авторства.
 --      А то натравлю порчу и наколдую недельный понос >:(
 --      Шутка :*
@@ -184,21 +184,21 @@
 -- =================== ФУНКЦИИ И МЕТОДЫ =======================
 --
 --
---      Здесь собраны все публичнные функции этого модуля. У 
+--      Здесь собраны все публичнные функции этой библиотеки. У
 -- каждой функции имеется детальное описание, что она делает и
 -- что в ней указывать.
 --
---      Для начала вам стоит ознакомиться как работает lua-модуль 
+--      Для начала вам стоит ознакомиться как работает lua-модуль
 -- XMLParser.lua. Инструкция есть прямо в файле и на странице
 -- проекта на github. Это необходимо, если вы планируете изменять
 -- код здесь.
 --
---      Модуль имеет некоторые функции и переменные В ГЛОБАЛЬНОМ 
+--      Библиотека имеет некоторые функции и переменные В ГЛОБАЛЬНОМ
 -- СКОУПЕ, что может создавать перезапись уже существующих!!!
---      Модуль также пытается использовать код из модификации 
--- ExplorerMod при загрузке и могут быть ошибки, если уже существующие 
+--      Библиотека также пытается использовать код из модификации
+-- ExplorerMod при загрузке и могут быть ошибки, если уже существующие
 -- одноименные вещи есть в вашем моде!
---      Список имен глобальных переменных, которые захватываются модулем
+--      Список имен глобальных переменных, которые захватываются библиотекой
 --  (кроме lua-команд):
 --      - [GameSaveFakeCoroutineScript] - вызов функции GameSave.lua;
 --      - [DoSomeByLoadingMap] - безопасный вызов функции ExplorerMod;
@@ -207,26 +207,26 @@
 --      - [GLOBAL_VEHICLEPARTSLIST_BASKETS] - список ExplorerMod, иначе конфиг;
 --      - [GLOBAL_VEHICLEPARTSLIST_CABINS] - список ExplorerMod, иначе конфиг.
 --
---      Пожалуйста, не изменяйте область видимости локальных 
--- функций и методов с таблицами, и не пытайтесь использовать их 
--- по отдельности. Внутренние процессы GameSave выполняются в 
--- строго заданной последовательности и работают с "памятью" модуля,
+--      Пожалуйста, не изменяйте область видимости локальных
+-- функций и методов с таблицами, и не пытайтесь использовать их
+-- по отдельности. Внутренние процессы GameSave выполняются в
+-- строго заданной последовательности и работают с "памятью" библиотеки,
 -- балансируя на нервах игры так, чтобы она старалась не вылетать.
---      Это сделано в целях оптимизации кода: процессы Get и Set 
--- поделены игровой загрузкой, что немного облегчает выполнение 
+--      Это сделано в целях оптимизации кода: процессы Get и Set
+-- поделены игровой загрузкой, что немного облегчает выполнение
 -- кода. По крайней мере, так ожидает автор...
 --
 --      Редактируйте внутреннюю функцию [GameSave:LoadUserScript()]
 -- для своих нужд.
---      Поместите в нее свой скрипт, который нужно выполнить сразу 
--- после загрузки сохранения. Используйте ее, как бы вы использовали 
+--      Поместите в нее свой скрипт, который нужно выполнить сразу
+-- после загрузки сохранения. Используйте ее, как бы вы использовали
 -- server.lua или любой другой файл или триггер с GE_FRAMES_PASSED.
 --
 --      Некоторые методы возвращают table XMLParser-объекты.
---      Юзердата не возвращается, поэтому для таких параметров как 
+--      Юзердата не возвращается, поэтому для таких параметров как
 -- позиция и вращение необходимо уже самостоятельно парсить строку.
 --
---      Обратите внимание, что дочерний класс должен вызывать 
+--      Обратите внимание, что дочерний класс должен вызывать
 -- главный метод своего родительского класса вплоть до GS.
 --
 ---------------------------------------------------------------
@@ -309,54 +309,74 @@
 -- ======================= ПОДРОБНЕЕ ==========================
 --
 --
---      Эту и другую информацию вы сможете найти на github  
--- проекта или найти примеры работы парсера в моде ExplorerMod 
+--      Эту и другую информацию вы сможете найти на github
+-- проекта или найти примеры работы библиотеки в моде ExplorerMod
 -- от того же автора.
---      Ссылка на github: https://github.com/ejetaxeblevich
+--      Ссылка на github: https://github.com/ejetaxeblevich/GameSave
 --
 ---------------------------------------------------------------
 --
 -- =================== КОММЕНТАРИИ АВТОРА =====================
--- 
+--
 -- E Jet: Это можно считать реверс инженерингом с помощью луашного яндередева?
--- 
+--
 -- ============================================================
 -- ============================================================
 
 
 
--- //////////////////////////// MODULE INIT /////////////////////////////////
+-- //////////////////////////// LIBRARY INIT /////////////////////////////////
 
 
 local GameSave = {}
 GameSave.__index = GameSave
-GameSave.version = "v1.1.1"
+GameSave.version = "v1.2.3"
 GameSave.LastSave_PATH = nil
 GameSave.cfg = {}
 GameSave.File = {}
-GameSave.File.SaveInfo = {}
-GameSave.File.CurrentMap = {}
-GameSave.File.WeatherDetail = {}
-GameSave.File.Triggers = {}
-GameSave.File.CinemaTriggers = {}
-GameSave.File.ExternalPaths = {}
-GameSave.File.Quests = {}
 
-local File = GameSave.File
-local SaveInfo = GameSave.File.SaveInfo
-local CurrentMap = GameSave.File.CurrentMap
-local WeatherDetail = GameSave.File.WeatherDetail
-local Triggers = GameSave.File.Triggers
-local CinemaTriggers = GameSave.File.CinemaTriggers
-local ExternalPaths = GameSave.File.ExternalPaths
-local Quests = GameSave.File.Quests
+LOG("[I] Init Library GameSave.lua ...")
+
+
+if not XMLParser then
+    LOG("[E] Library GameSave.lua === Could not find global xmlparser.lua...")
+    return nil
+end
+
+if not g_ObjCont then
+    LOG("[E] Library GameSave.lua === Could not find global g_ObjCont...")
+    return nil
+end
+if not g_QuestStateManager then
+    LOG("[E] Library GameSave.lua === Could not find global g_QuestStateManager...")
+    return nil
+end
+
+
 local CONFIG = GameSave.cfg
+local File = GameSave.File
+File.SaveInfo = {}
+File.CurrentMap = {}
+File.WeatherDetail = {}
+File.Triggers = {}
+File.CinemaTriggers = {}
+File.ExternalPaths = {}
+File.Quests = {}
+
+local SaveInfo = File.SaveInfo
+local CurrentMap = File.CurrentMap
+local WeatherDetail = File.WeatherDetail
+local Triggers = File.Triggers
+local CinemaTriggers = File.CinemaTriggers
+local ExternalPaths = File.ExternalPaths
+local Quests = File.Quests
 
 
 local str_find = string.find
 local str_sub = string.sub
 local str_gsub = string.gsub
 local str_len = string.len
+local str_format = string.format
 
 local t_insert = table.insert
 local t_concat = table.concat
@@ -364,24 +384,6 @@ local t_getn = table.getn
 local t_sort = table.sort
 
 local io_open = io.open
-
-
-LOG("[I] Init Module GameSave.lua ...")
-
-
-if not XMLParser then
-    LOG("[E] Module GameSave.lua === XMLParser not found!!!")
-    return nil
-end
-
-if not g_ObjCont then
-    LOG("[E] Module GameSave.lua === g_ObjCont not found!!!")
-    return nil
-end
-if not g_QuestStateManager then
-    LOG("[E] Module GameSave.lua === g_QuestStateManager not found!!!")
-    return nil
-end
 
 
 -- //////////////////////////// LOADER CONFIG ///////////////////////////////
@@ -474,7 +476,7 @@ function GameSave:LoadUserScript()
 	--глобальный хук из ExplorerMod, осторожнее!
 	if DoSomeByLoadingMap then
 		local s, e = pcall(function() return DoSomeByLoadingMap() end)
-		if e then LOG("[E] Module GameSave.lua === ", e) end
+		if e then LOG("[E] Library GameSave.lua === ", e) end
 	end
 end
 
@@ -485,7 +487,7 @@ end
 
 -- ///////////////////////////////////////////////////////////////////////////////
 
--- //////////////////////// LOCAL MODULE FUNCTIONS //////////////////////////////
+-- //////////////////////// LOCAL LIBRARY FUNCTIONS //////////////////////////////
 
 -- ///////////////////////////////////////////////////////////////////////////////
 
@@ -525,8 +527,8 @@ local function table_contains_value(tbl, value)
 end
 
 local function table_debug(tbl, indent)
-    if type(tbl)~="table" then 
-        return ""..tostring(tbl) 
+    if type(tbl)~="table" then
+        return ""..tostring(tbl)
     end
     indent = indent or 0
     local result = ""
@@ -569,7 +571,7 @@ end
 
 -- ///////////////////////////////////////////////////////////////////////////////
 
--- //////////////////////// GLOBAL MODULE FUNCTIONS //////////////////////////////
+-- //////////////////////// GLOBAL LIBRARY FUNCTIONS //////////////////////////////
 
 -- ///////////////////////////////////////////////////////////////////////////////
 
@@ -583,7 +585,7 @@ function GS:LoadGame(stringSaveDirPATH)
 	if GameSave.Path then
 		return GameSave:LoadGame()
 	end
-	LOG("[E] Module GameSave.lua === GameSave.Path is nil!")
+	LOG("[E] Library GameSave.lua === GameSave.Path is nil!")
 end
 --#2 save&load
 --#3
@@ -613,12 +615,12 @@ function GS:GetSaveFile(stringByLOGline)
 	if strLastSaveFilePATH~="" then
 		strLastSaveFilePATH = str_sub(strLastSaveFilePATH, 1, -5)
 	else
-		LOG("[E] Module GameSave.lua === GS:GetSaveFile: Path error '"..strLastSaveFilePATH.."'")
+		LOG("[W] Library GameSave.lua === GS:GetSaveFile: Path info empty!")
 		return nil
 	end
 	strLastSaveFilePATH = strLastSaveFilePATH..""..CONFIG.Default_SaveInfo
 	if not str_find(strLastSaveFilePATH, "\\") then
-		LOG("[E] Module GameSave.lua === GS:GetSaveFile: Path error '"..strLastSaveFilePATH.."'")
+		LOG("[E] Library GameSave.lua === GS:GetSaveFile: Path error '"..strLastSaveFilePATH.."'")
 		return nil
 	end
 	local str = XMLParser:QuickGet(strLastSaveFilePATH, "Name").AsString or SaveFileName
@@ -641,12 +643,19 @@ function GS:UpdateLastSavePATH(stringPATH)
 	if XMLParser:IsFileExists(stringPATH) then
 		GameSave.LastSave_PATH = stringPATH
 		self.LastSave_PATH = stringPATH
-		LOG("[I] Module GameSave.lua === New save slot detected '"..stringPATH.."'")
+		LOG("[I] Library GameSave.lua === New save slot detected '"..stringPATH.."'")
 	else
 		GameSave.LastSave_PATH = GameSave.LastSave_PATH or nil
 		self.LastSave_PATH = self.LastSave_PATH or nil
-		LOG("[E] Module GameSave.lua === Save slot does not exist! '"..stringPATH.."'")
+		LOG("[E] Library GameSave.lua === Save slot does not exist! '"..stringPATH.."'")
 	end
+end
+
+function GS:FindSaveIn(stringPATHtoProfileSaves)
+	local ProfileSaves = {}
+	ProfileSaves.PATH = stringPATHtoProfileSaves or "data\\profiles\\Player\\saves"
+
+	--local function
 end
 
 
@@ -806,13 +815,13 @@ function GS:CreateAndSetObjectFrom(stringObjectName, cvectorNewPosition, stringC
 			else
 				local obj = DynScene:CreateAndSetObject(OBJECT)
 				if not obj then
-					LOG("[E] Module GameSave.lua === Unsorted object ERROR!", Property.Name)
+					LOG("[E] Library GameSave.lua === Unsorted object ERROR!", Property.Name)
 				end
 				return obj
 			end
 		end
 	end
-	LOG("[E] Module GameSave.lua === CreateAndSetObjectFrom(): loading ERROR! Path:", path, "OBJECT:\n"..table_debug(OBJECT))
+	LOG("[E] Library GameSave.lua === CreateAndSetObjectFrom(): loading ERROR! Path:", path, "OBJECT:\n"..table_debug(OBJECT))
 end
 
 
@@ -917,9 +926,8 @@ function File:Clean(bCleanCachedDynamics)
 
     local after = gcinfo()
 
-    LOG('[I] Module GameSave.lua === Cleanup:: ', before, after)
+    LOG('[I] Library GameSave.lua === Cleanup:: ', before, after)
 end
-
 function File:Get()
 	--сброс
 	self:Clean()
@@ -955,7 +963,42 @@ function File:Get()
         XMLParser.data.ROOT = "GUI"
 		return true
 	end
-	LOG("[E] Module GameSave.lua === CurrentMap.PATH IS_MISSING!")
+	LOG("[E] Library GameSave.lua === CurrentMap.PATH IS_MISSING!")
+end
+
+function File:CalcSavesFolders(PATHtoProfileSaves, FolderPrefix)
+	local skoka_dir = 0
+	local skoka_saves = 0
+	local saves_dirs = {}
+	local empty_dirs = {}
+	local prefix = FolderPrefix or ""
+
+	local save_exists
+	local dir_exists
+	repeat
+		local SAVEdir = prefix..""..str_format("%08d", skoka_dir)
+		local path = PATHtoProfileSaves.."\\"..SAVEdir.."\\saveinfo.xml"
+		save_exists = io_open(path, "r")
+		if save_exists then
+			--если есть слот запишем что есть слот
+			save_exists:close()
+			skoka_saves = skoka_saves + 1
+			skoka_dir = skoka_dir + 1
+			t_insert(saves_dirs, SAVEdir)
+			dir_exists = false
+		else
+			dir_exists = io_open(path, "w")
+			if dir_exists then
+				--если есть папка запишем что есть папка
+				dir_exists:close()
+				os.remove(path)
+				skoka_dir = skoka_dir + 1
+				t_insert(empty_dirs, SAVEdir)
+			end
+		end
+	until (not save_exists) and (not dir_exists)
+
+	return saves_dirs, empty_dirs, skoka_dir, skoka_saves
 end
 
 function CurrentMap:LevelInfoManager()
@@ -987,7 +1030,7 @@ function CurrentMap:LevelInfoManager()
 				return KnownLevels
 			end
 		end
-		LOG("[E] Module GameSave.lua === KnownLevels IS_MISSING!")
+		LOG("[E] Library GameSave.lua === KnownLevels IS_MISSING!")
 	end
 
 	function LevelInfoManager:GetQuestItems()
@@ -1000,7 +1043,7 @@ function CurrentMap:LevelInfoManager()
 				return str
 			end
 		end
-		LOG("[E] Module GameSave.lua === QuestItems IS_MISSING!")
+		LOG("[E] Library GameSave.lua === QuestItems IS_MISSING!")
 	end
 
 	function LevelInfoManager:GetWeatherState()
@@ -1027,9 +1070,9 @@ function CurrentMap:LevelInfoManager()
 				return {id=ID, time=Time}
 			end
 		end
-		LOG("[E] Module GameSave.lua === WeatherState IS_MISSING!")
+		LOG("[E] Library GameSave.lua === WeatherState IS_MISSING!")
 	end
-	
+
 	return LevelInfoManager
 end
 function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
@@ -1099,7 +1142,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			local childs_property = childs._itemProperties
 			if childs_property then
 				if childs_property.TimeForNextCheck then
-					return true 
+					return true
 				end
 			end
 		end
@@ -1113,7 +1156,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
     function DynamicSceneManager:IsPlayer(object)
 		if object and object._itemProperties.Prototype=="player" then return true end
 	end
-	function DynamicSceneManager:IsGUN(object) 
+	function DynamicSceneManager:IsGUN(object)
 		for i, child in ipairs(object._itemChilds or {}) do
 			if child._itemTag=="Runtime" then
 				if child._itemProperties.ModelName then
@@ -1122,10 +1165,10 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			end
 		end
 	end
-	function DynamicSceneManager:IsObjectWithName(object) 
+	function DynamicSceneManager:IsObjectWithName(object)
 		if object and object._itemProperties.Name then return true end
 	end
-	function DynamicSceneManager:IsObjectWithPrototype(object) 
+	function DynamicSceneManager:IsObjectWithPrototype(object)
 		if object and object._itemProperties.Prototype then return true end
 	end
 
@@ -1134,8 +1177,8 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 	function DynamicSceneManager:ProcessObjectScene(forWho, isCondition)
 		local scene = self.Objects
 		local forWho = forWho or {}
-		local isCondition = type(isCondition)=="function" and isCondition or function() 
-			LOG("[E] Module GameSave.lua === DynamicSceneManager:ProcessObjectScene :: arg isCondition IS_MISSING!")
+		local isCondition = type(isCondition)=="function" and isCondition or function()
+			LOG("[E] Library GameSave.lua === DynamicSceneManager:ProcessObjectScene :: arg isCondition IS_MISSING!")
 			return false
 		end
 		if not forWho[1] then
@@ -1155,7 +1198,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 		end
 		return next(forWho) and forWho
 	end
-	
+
 	function DynamicSceneManager:CallTriggers()
 		local Triggers = self.Triggers or {}
 		Triggers = self:ProcessObjectScene(Triggers, self.IsTrigger)
@@ -1163,14 +1206,14 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Triggers = Triggers
 			return Triggers
 		end
-		LOG("[E] Module GameSave.lua === Triggers IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Triggers IS_MISSING!")
 	end
 	function DynamicSceneManager:GetGlobalVars()
 		local Triggers = self.Triggers or {}
 		local Vars = self.GlobalVars or {}
 		if not Vars or not Vars[1] then
 			for i, trigger in ipairs(Triggers) do
-				local name = trigger._itemProperties.Name 
+				local name = trigger._itemProperties.Name
 				if name and name=="GlobalVar" then
 					for i, var in ipairs(trigger._itemChilds or {}) do
 						if var._itemTag=="Variable" then
@@ -1189,7 +1232,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.GlobalVars = Vars
 			return Vars
 		end
-		LOG("[E] Module GameSave.lua === Vars IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Vars IS_MISSING!")
 	end
 	function DynamicSceneManager:GetTriggers()
 		local Triggers = self.Triggers or {}
@@ -1205,7 +1248,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			end
 			return (next(activeTriggers) and activeTriggers), (next(inactiveTriggers) and inactiveTriggers)
 		end
-		LOG("[E] Module GameSave.lua === Triggers IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Triggers IS_MISSING!")
 	end
     function DynamicSceneManager:GetSiftedActiveTriggers()
 		local ActiveTriggers, InactiveTriggers = self:GetTriggers()
@@ -1247,7 +1290,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.InfectionZones = InfectionZones
 			return InfectionZones
 		end
-		LOG("[E] Module GameSave.lua === InfectionZones IS_MISSING!")
+		LOG("[E] Library GameSave.lua === InfectionZones IS_MISSING!")
 	end
     function DynamicSceneManager:CallInfectionTeams(infectionZones)
         local InfectionTeams = self.InfectionTeams or {}
@@ -1279,7 +1322,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Locations = Locations
 			return Locations
 		end
-		LOG("[E] Module GameSave.lua === Locations IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Locations IS_MISSING!")
 	end
 	function DynamicSceneManager:CallTowns()
 		local Towns = self.Towns or {}
@@ -1288,7 +1331,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Towns = Towns
 			return Towns
 		end
-		LOG("[E] Module GameSave.lua === Towns IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Towns IS_MISSING!")
 	end
 	function DynamicSceneManager:CallTeams()
 		local Teams = self.Teams or {}
@@ -1297,7 +1340,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Teams = Teams
 			return Teams
 		end
-		LOG("[E] Module GameSave.lua === Teams IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Teams IS_MISSING!")
 	end
 	function DynamicSceneManager:CallVehicles()
 		local Vehicles = self.Vehicles or {}
@@ -1306,7 +1349,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Vehicles = Vehicles
 			return Vehicles
 		end
-		LOG("[E] Module GameSave.lua === Vehicles IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Vehicles IS_MISSING!")
 	end
 	function DynamicSceneManager:CallDynamics()
 		local Dynamics = self.Dynamics or {}
@@ -1315,7 +1358,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Dynamics = Dynamics
 			return Dynamics
 		end
-		LOG("[E] Module GameSave.lua === Dynamics IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Dynamics IS_MISSING!")
 	end
 	function DynamicSceneManager:CallHumans()
 		local Humans = self.Humans or {}
@@ -1324,7 +1367,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Humans = Humans
 			return Humans
 		end
-		LOG("[E] Module GameSave.lua === Humans IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Humans IS_MISSING!")
 	end
 	function DynamicSceneManager:CallDots()
 		local Dots = self.Dots or {}
@@ -1333,7 +1376,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Dots = Dots
 			return Dots
 		end
-		LOG("[E] Module GameSave.lua === Dots IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Dots IS_MISSING!")
 	end
 	function DynamicSceneManager:CallNPCs()
 		--сначала CallLocations() и CallTowns() перед CallNPCs()
@@ -1360,7 +1403,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.NPCs = NPCs
 			return NPCs
 		end
-		LOG("[E] Module GameSave.lua === NPCs IS_MISSING!")
+		LOG("[E] Library GameSave.lua === NPCs IS_MISSING!")
 	end
     function DynamicSceneManager:CallChests()
 		local Chests = self.Chests or {}
@@ -1369,7 +1412,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.Chests = Chests
 			return Chests
 		end
-		LOG("[E] Module GameSave.lua === Chests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === Chests IS_MISSING!")
 	end
     function DynamicSceneManager:CallPlayer()
 		local PlayerInfo = self.PlayerInfo or {}
@@ -1378,7 +1421,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.PlayerInfo = PlayerInfo
 			return PlayerInfo
 		end
-		LOG("[E] Module GameSave.lua === PlayerInfo IS_MISSING!")
+		LOG("[E] Library GameSave.lua === PlayerInfo IS_MISSING!")
 	end
 
 	function DynamicSceneManager:CallOtherObjectsWithNames()
@@ -1388,7 +1431,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.WithNames = WithNames
 			return WithNames
 		end
-		LOG("[E] Module GameSave.lua === WithNames IS_MISSING!")
+		LOG("[E] Library GameSave.lua === WithNames IS_MISSING!")
 	end
 	function DynamicSceneManager:CallOtherObjectsWithPrototypes()
 		local WithPrototypes = self.WithPrototypes or {}
@@ -1397,7 +1440,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			self.WithPrototypes = WithPrototypes
 			return WithPrototypes
 		end
-		LOG("[E] Module GameSave.lua === WithPrototypes IS_MISSING!")
+		LOG("[E] Library GameSave.lua === WithPrototypes IS_MISSING!")
 	end
 
     --///////////////////////
@@ -1771,8 +1814,8 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 		local Property = object and object._itemProperties or {}
 		if not getObj(Property.Name) then
 			CreateNewObject{
-				prototypeName = Property.Prototype, 
-				objName = Property.Name, 
+				prototypeName = Property.Prototype,
+				objName = Property.Name,
 				belong = (tonumber(Property.Belong) or 1100)
 			}
             IsCreated = true
@@ -1797,9 +1840,9 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
     function DynamicSceneManager:CreateAndSetVehicle(vehicle, object, isPlayer)
         local IsCreated = false
 		local Property = object and object._itemProperties or {}
-        if Property.Name then 
+        if Property.Name then
             vehicle = vehicle or getObj(Property.Name)
-        elseif Property.ObjectId then 
+        elseif Property.ObjectId then
             vehicle = vehicle or getObj( tonumber(Property.ObjectId) )
         end
 		if not Property.Name then
@@ -1807,8 +1850,8 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 		end
 		if not vehicle then
             CreateNewObject{
-				prototypeName = Property.Prototype, 
-				objName = Property.Name, 
+				prototypeName = Property.Prototype,
+				objName = Property.Name,
 				belong = (tonumber(Property.Belong) or 1100)
 			}
             IsCreated = true
@@ -1846,7 +1889,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
                         PartRuntime = PartRuntime,
                         PartAffix = PartAffix
                     }
-                    
+
                     if PartName=="CHASSIS" or PartName=="BASKET" or PartName=="CABIN" then
                         if PartName=="BASKET" or PartName=="CABIN" then
                             veh:SetNewPart(PartName, PartProperty.Prototype)
@@ -1856,7 +1899,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 						veh:SetNewPart(PartName, PartProperty.Prototype)
 						self:ApplyPartProperties(veh, PartName, PartInfo)
                     end
-                end	
+                end
             end
 
             if VehicleRuntime then
@@ -1911,11 +1954,11 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
     function DynamicSceneManager:CreateAndSetTeam(team, object)
         local IsCreated = false
 		local Property = object and object._itemProperties or {}
-        Property.Name = Property.Name or object._Infection 
+        Property.Name = Property.Name or object._Infection
 		if not team and not getObj(Property.Name) and not getObj( tonumber(Property.ObjectId) ) then
 			CreateNewObject{
-				prototypeName = "team", 
-				objName = Property.Name, 
+				prototypeName = "team",
+				objName = Property.Name,
 				belong = (tonumber(Property.Belong) or 1100)
 			}
             IsCreated = true
@@ -1959,7 +2002,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			if Property.Radius then loc:SetProperty("Radius", Property.Radius) end
 			if Property.Active then loc:SetProperty("Active", Property.Active) end
 		else
-			LOG("[E] Module GameSave.lua === genericLocation object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === genericLocation object ERROR!", Property.Name)
 		end
 		return loc
 	end
@@ -1969,7 +2012,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 		if barricade then
 			if Property.Probability then barricade:SetProperty("Probability", Property.Probability) end
 		else
-			LOG("[E] Module GameSave.lua === Dynamic object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === Dynamic object ERROR!", Property.Name)
 		end
 		return barricade
 	end
@@ -1982,11 +2025,11 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			for _, PathsName in ipairs( string_split(PathsNames) or {} ) do
 				human:AddWalkPathByName(PathsName)
 			end
-			if CurPath and CurPath~="" then 
-				human:SetWalkPathByName(CurPath) 
+			if CurPath and CurPath~="" then
+				human:SetWalkPathByName(CurPath)
 			end
 		else
-			LOG("[E] Module GameSave.lua === Human object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === Human object ERROR!", Property.Name)
 		end
 		return human
 	end
@@ -1997,7 +2040,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			local Health = Dot._itemChilds[1]._itemProperties.Health
 			if Health then dot:AddModifier("hp", "= "..Health) end
 		else
-			LOG("[E] Module GameSave.lua === Dot object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === Dot object ERROR!", Property.Name)
 		end
 		return dot
 	end
@@ -2031,7 +2074,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 				end
 			end
 		else
-			LOG("[E] Module GameSave.lua === Chest object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === Chest object ERROR!", Property.Name)
 		end
 		return chest
 	end
@@ -2042,7 +2085,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 			local SetSpokenCount = tonumber(Property.SpokenCount)
 			npc:SetSpokenCount(SetSpokenCount or 0)
 		else
-			LOG("[E] Module GameSave.lua === NPC object ERROR!", Property.Name)
+			LOG("[E] Library GameSave.lua === NPC object ERROR!", Property.Name)
 		end
 		return npc
 	end
@@ -2051,7 +2094,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 		local TownWorkshop = self:GetTownWorkshop(Town)
 		local doit = false
 		if TownShop then
-			if not GameSave.CachedDynamic_TownShops then 
+			if not GameSave.CachedDynamic_TownShops then
 				GameSave.CachedDynamic_TownShops = {}
 			end
 			local ShopName = TownShop._itemProperties.Name or ""
@@ -2059,11 +2102,11 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 				self:FillCurrentShop(ShopName, TownShop)
 				GameSave.CachedDynamic_TownShops[ShopName] = TownShop
 				doit = true
-				LOG("[I] Module GameSave.lua === CachedDynamic is ready:", ShopName, "Please, do save&load and then GS:LoadCached()")
+				LOG("[I] Library GameSave.lua === CachedDynamic is ready:", ShopName, "Please, do save&load and then GS:LoadCached()")
 			end
 		end
 		if TownWorkshop then
-			if not GameSave.CachedDynamic_TownWorkshops then 
+			if not GameSave.CachedDynamic_TownWorkshops then
 				GameSave.CachedDynamic_TownWorkshops = {}
 			end
 			local WorkshopName = TownWorkshop._itemProperties.Name or ""
@@ -2071,7 +2114,7 @@ function CurrentMap:DynamicSceneManager(bDoNotLoadScene)
 				self:FillCurrentWorkshop(WorkshopName, TownWorkshop)
 				GameSave.CachedDynamic_TownWorkshops[WorkshopName] = TownWorkshop
 				doit = true
-				LOG("[I] Module GameSave.lua === CachedDynamic is ready:", WorkshopName, "Please, do save&load and then GS:LoadCached()")
+				LOG("[I] Library GameSave.lua === CachedDynamic is ready:", WorkshopName, "Please, do save&load and then GS:LoadCached()")
 			end
 		end
 		return doit
@@ -2110,22 +2153,22 @@ function CurrentMap:QuestManager()
 		QuestManager.tree = QuestManager:init()
 	end
 
-	function QuestManager:IsQuestCanBeGiven(quest) 
+	function QuestManager:IsQuestCanBeGiven(quest)
 		if quest and quest._itemProperties.CanBeGiven=="1" then return true end
 	end
-	function QuestManager:IsQuestTaken(quest) 
+	function QuestManager:IsQuestTaken(quest)
 		if quest and quest._itemProperties.IsTaken=="1" then return true end
 	end
-	function QuestManager:IsQuestCompleted(quest) 
+	function QuestManager:IsQuestCompleted(quest)
 		if quest and quest._itemProperties.CompleteStatus=="complete" then return true end
 	end
-	function QuestManager:IsQuestFailed(quest) 
+	function QuestManager:IsQuestFailed(quest)
 		if quest and quest._itemProperties.CompleteStatus=="failed" then return true end
 	end
-	function QuestManager:IsOtherQuestStatus(quest) 
+	function QuestManager:IsOtherQuestStatus(quest)
 		if quest and quest._itemProperties.CompleteStatus=="not_complete" then return true end
 	end
-	function QuestManager:IsQuestWithName(quest, name) 
+	function QuestManager:IsQuestWithName(quest, name)
 		if quest and quest._itemProperties.Name==name then return true end
 	end
 	function QuestManager:IsQuestAutomatic(quest)
@@ -2141,8 +2184,8 @@ function CurrentMap:QuestManager()
 	function QuestManager:ProcessQuest(forWho, isCondition, quests, name)
 		local quests = quests or self.Quests
 		local forWho = forWho or {}
-		local isCondition = type(isCondition)=="function" and isCondition or function() 
-			LOG("[E] Module GameSave.lua === QuestManager:ProcessQuest :: arg isCondition IS_MISSING!")
+		local isCondition = type(isCondition)=="function" and isCondition or function()
+			LOG("[E] Library GameSave.lua === QuestManager:ProcessQuest :: arg isCondition IS_MISSING!")
 			return false
 		end
 		if not forWho[1] then
@@ -2170,7 +2213,7 @@ function CurrentMap:QuestManager()
 			self.CanBeGivenQuests = CanBeGiven
 			return CanBeGiven
 		end
-		LOG("[E] Module GameSave.lua === CanBeGivenQuests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === CanBeGivenQuests IS_MISSING!")
 	end
 	function QuestManager:CallQuestsTaken()
 		local TakedQuests = self.TakedQuests or {}
@@ -2179,7 +2222,7 @@ function CurrentMap:QuestManager()
 			self.TakedQuests = TakedQuests
 			return TakedQuests
 		end
-		LOG("[E] Module GameSave.lua === TakedQuests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === TakedQuests IS_MISSING!")
 	end
 	function QuestManager:CallQuestsCompleted()
 		local CompletedQuests = self.CompletedQuests or {}
@@ -2188,7 +2231,7 @@ function CurrentMap:QuestManager()
 			self.CompletedQuests = CompletedQuests
 			return CompletedQuests
 		end
-		LOG("[E] Module GameSave.lua === CompletedQuests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === CompletedQuests IS_MISSING!")
 	end
 	function QuestManager:CallQuestsFailed()
 		local FailedQuests = self.FailedQuests or {}
@@ -2197,7 +2240,7 @@ function CurrentMap:QuestManager()
 			self.FailedQuests = FailedQuests
 			return FailedQuests
 		end
-		LOG("[E] Module GameSave.lua === FailedQuests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === FailedQuests IS_MISSING!")
 	end
 	function QuestManager:CallQuestsOther()
 		local OtherQuests = self.OtherQuests or {}
@@ -2206,7 +2249,7 @@ function CurrentMap:QuestManager()
 			self.OtherQuests = OtherQuests
 			return OtherQuests
 		end
-		LOG("[E] Module GameSave.lua === OtherQuests IS_MISSING!")
+		LOG("[E] Library GameSave.lua === OtherQuests IS_MISSING!")
 	end
 
 	function QuestManager:CallAll()
@@ -2217,7 +2260,7 @@ function CurrentMap:QuestManager()
 		local Other = {} --self:CallQuestsOther()
 
 		self.AllCalledQuests = {Completed, Failed, Taken, CanBeGiven, Other}
-		
+
 		return Completed, Failed, Taken, CanBeGiven, Other
 	end
 
@@ -2375,12 +2418,12 @@ function CurrentMap:QuestManager()
 	function QuestManager:GetQuestMatrix()
 		local Completed, Failed, Taken, CanBeGiven, Other = self:CallAll()
 		--LOG('Completed\n'..table_debug(Completed), 'Failed\n'..table_debug(Failed), 'Taken\n'..table_debug(Taken), 'CanBeGiven\n'..table_debug(CanBeGiven), 'Other\n'..table_debug(Other))
-		
+
 		local QuestMatrixPaths = self:BuildQuestMatrixPaths()
 
 		--LOG('QuestMatrixPaths\n'..table_debug(QuestMatrixPaths))
 		--LOG('self.QuestInfo\n'..table_debug(self.QuestInfo))
-		
+
 		return QuestMatrixPaths
 	end
 
@@ -2465,14 +2508,14 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 				w=w+1
 			end
 			backup_file:close()
-			LOG("[I] Module GameSave.lua === ToleranceManager: Create backup relationship in \""..tostring(tolerance_backup_path).."\"")
+			LOG("[I] Library GameSave.lua === ToleranceManager: Create backup relationship in \""..tostring(tolerance_backup_path).."\"")
 		end
-		if file then 
-			file:close() 
+		if file then
+			file:close()
 			file = nil
 		end
 		if calcStatus == 0 then
-			LOG("[E] Module GameSave.lua === Relationship BackupFile reading error!!!")
+			LOG("[E] Library GameSave.lua === Relationship BackupFile reading error!!!")
 			return nil
 		end
 		return calcStatus
@@ -2494,14 +2537,14 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 					break
 				end
 			end
-			LOG("[I] Module GameSave.lua === ToleranceManager: Read & apply relationship from \""..tostring(tolerance_backup_path).."\"")
+			LOG("[I] Library GameSave.lua === ToleranceManager: Read & apply relationship from \""..tostring(tolerance_backup_path).."\"")
 		end
-		if file then 
-			file:close() 
+		if file then
+			file:close()
 			file = nil
 		end
 		if calcStatus == 0 then
-			LOG("[E] Module GameSave.lua === Relationship BackupFile reading error!!!")
+			LOG("[E] Library GameSave.lua === Relationship BackupFile reading error!!!")
 			return nil
 		end
 		return calcStatus
@@ -2509,7 +2552,7 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 
 
 	function ToleranceManager:CalcRelationship(MinPlayerID, MaxPlayerID, DefaultTolerance, RelationshipItems, RelationshipChilds, BackupScript, relationship_coeff, tolerance_backup_path)
-		LOG("[I] Module GameSave.lua === ToleranceManager: Calc relationship...")
+		LOG("[I] Library GameSave.lua === ToleranceManager: Calc relationship...")
 		local calcStatus = 0
 		local function get_status(Tolerance)
 				local Status = self.RS_ENEMY
@@ -2576,12 +2619,12 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 						tolerance = tonumber(tolerance)
 						who = tonumber(who)
 						forwhom = tonumber(forwhom)
-						if tolerance>3+relationship_coeff then 
+						if tolerance>3+relationship_coeff then
 							Status = self.RS_OWN
-						elseif tolerance>2+relationship_coeff then 
+						elseif tolerance>2+relationship_coeff then
 							Status = self.RS_ALLY
-						elseif tolerance>1+relationship_coeff then 
-							Status = self.RS_NEUTRAL 
+						elseif tolerance>1+relationship_coeff then
+							Status = self.RS_NEUTRAL
 						end
 						--LOG(forwhom, who, Status)
 						SetTolerance(forwhom, who, Status)
@@ -2596,16 +2639,16 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 			file = nil
 		end
 		if 2>calcStatus then
-			LOG("[E] Module GameSave.lua === Relationship reading error!!!")
+			LOG("[E] Library GameSave.lua === Relationship reading error!!!")
 			return nil
 		end
-		LOG("[I] Module GameSave.lua === ToleranceManager: Apply new relationship from \""..tostring(self.SaveFilePATH).."\"")
+		LOG("[I] Library GameSave.lua === ToleranceManager: Apply new relationship from \""..tostring(self.SaveFilePATH).."\"")
 		return calcStatus
 	end
 
 	function ToleranceManager:Load(stringToleranceBackupFilePATH, intBackupScript, floatRelationshipCoeff)
 		if not self.tree and not intBackupScript then
-			LOG("[E] Module GameSave.lua === Relationship reading error!!!")
+			LOG("[E] Library GameSave.lua === Relationship reading error!!!")
 			return nil
 		end
 		self.RS_ENEMY = RS_ENEMY or 1
@@ -2616,10 +2659,10 @@ function CurrentMap:ToleranceManager(stringCustomPathToSaveFile)
 		self.BackupScript = intBackupScript or CONFIG.Default_ToleranceBackupScript
 		self.RelationshipCoeff = floatRelationshipCoeff or CONFIG.Default_ToleranceRelationshipCoeff
 		self.ToleranceBackupFile = stringToleranceBackupFilePATH or CONFIG.Default_ToleranceBackupFile
-		
+
 		local BackupScript = self.BackupScript
-		local relationship_coeff = self.RelationshipCoeff	
-		local tolerance_backup_path = self.ToleranceBackupFile		
+		local relationship_coeff = self.RelationshipCoeff
+		local tolerance_backup_path = self.ToleranceBackupFile
 
 		local MinPlayerID
 		local MaxPlayerID
@@ -2665,7 +2708,7 @@ function CurrentMap:Encyclopaedia()
 			local Clans = {}
 			local clans = tree:GetObj({"Clans"})
 			if clans then
-				local belongs = clans:GetProperty("Belongs").AsString
+				local belongs = clans:GetProperty("Belongs").AsString or ""
 				belongs = string_split(belongs)
 				Clans = belongs
 			end
@@ -2673,7 +2716,7 @@ function CurrentMap:Encyclopaedia()
 				return Clans
 			end
 		end
-		LOG("[E] Module GameSave.lua === EncyclopaediaClans IS_MISSING!")
+		LOG("[E] Library GameSave.lua === EncyclopaediaClans IS_MISSING!")
 	end
 
 	function Encyclopaedia:GetPrototypes()
@@ -2697,9 +2740,9 @@ function CurrentMap:Encyclopaedia()
 				return Prototypes
 			end
 		end
-		LOG("[E] Module GameSave.lua === EncyclopaediaPrototypes IS_MISSING!")
+		LOG("[E] Library GameSave.lua === EncyclopaediaPrototypes IS_MISSING!")
 	end
-	
+
 	return Encyclopaedia
 end
 function CurrentMap:HistoryWnd()
@@ -2736,9 +2779,9 @@ function CurrentMap:HistoryWnd()
 				return Histories
 			end
 		end
-		LOG("[E] Module GameSave.lua === HistoryWnd IS_MISSING!")
+		LOG("[E] Library GameSave.lua === HistoryWnd IS_MISSING!")
 	end
-	
+
 	return HistoryWnd
 end
 function CurrentMap:BooksWnd()
@@ -2773,9 +2816,9 @@ function CurrentMap:BooksWnd()
 				return Books
 			end
 		end
-		LOG("[E] Module GameSave.lua === BooksWnd IS_MISSING!")
+		LOG("[E] Library GameSave.lua === BooksWnd IS_MISSING!")
 	end
-	
+
 	return BooksWnd
 end
 function CurrentMap:RadarWnd()
@@ -2804,16 +2847,16 @@ function CurrentMap:RadarWnd()
 			local TurretsAllowed = (tostring(radar._itemProperties.TurretsAllowed)=="1" and true or false)
 			local DistancesAllowed = (tostring(radar._itemProperties.DistancesAllowed)=="1" and true or false)
 			return {
-				ScanRadius = ScanRadius, 
-				NavPointsAllowed = NavPointsAllowed, 
+				ScanRadius = ScanRadius,
+				NavPointsAllowed = NavPointsAllowed,
 				VehiclesAllowed = VehiclesAllowed,
 				TurretsAllowed = TurretsAllowed,
 				DistancesAllowed = DistancesAllowed
 			}
 		end
-		LOG("[E] Module GameSave.lua === RadarWnd IS_MISSING!")
+		LOG("[E] Library GameSave.lua === RadarWnd IS_MISSING!")
 	end
-	
+
 	return RadarWnd
 end
 
@@ -2971,7 +3014,7 @@ function GameSave:CreateChest(position)
     if YASHIK then
         chest = GetEntityByID(YASHIK:GetId())
     else
-        local chestID = CreateNewObject{prototypeName = "someChest", objName = "GameLoadChest"}	
+        local chestID = CreateNewObject{prototypeName = "someChest", objName = "GameLoadChest"}
         chest = GetEntityByID(chestID)
     end
     chest:SetPosition(position)
@@ -2979,7 +3022,7 @@ function GameSave:CreateChest(position)
 end
 function GameSave:AddPlayerGadgetsToChest(gadgets, position)
     if gadgets[1] then
-        local chest = GameSave:CreateChest(position)	
+        local chest = GameSave:CreateChest(position)
         for i, gadget in ipairs(gadgets) do
             local Prototype = gadget._itemProperties.Prototype
             local gadgetID = CreateNewObject{prototypeName = Prototype, objName = "GameLoadGadget"..i.."_"..tostring(Prototype), belong = 1100}
@@ -3006,7 +3049,7 @@ end
 
 function GameSave:GiveQuestState()
 	if CONFIG.LoadQuestState then
-		LOG("[I] Module GameSave.lua === GameLoad:GiveQuestState()")
+		LOG("[I] Library GameSave.lua === GameLoad:GiveQuestState()")
 		local s = self
 		local QuestManager = CurrentMap:QuestManager()
 
@@ -3023,7 +3066,7 @@ function GameSave:GiveQuestState()
 					local QuestScript = dostring("local f = function()\n "..Command.."\n end; return f")
 					local s, e = pcall(QuestScript)
 					if e then
-						LOG("[E] Module GameSave.lua === QuestScript error! "..tostring(e))
+						LOG("[E] Library GameSave.lua === QuestScript error! "..tostring(e))
 					end
 				end
 			--until true
@@ -3032,12 +3075,12 @@ function GameSave:GiveQuestState()
 		for _, trigger in ipairs(s.InactiveTriggers or {}) do
 			TDeactivate(trigger)
 		end
-	
-		LOG("[I] Module GameSave.lua === Apply QuestState")
+
+		LOG("[I] Library GameSave.lua === Apply QuestState")
 	end
 end
 function GameSave:GiveGUIInfo()
-	LOG("[I] Module GameSave.lua === GameLoad:GiveGUIInfo()")
+	LOG("[I] Library GameSave.lua === GameLoad:GiveGUIInfo()")
 	local s = self
 	--радар
 	if CONFIG.GUI_LoadRadar then
@@ -3089,7 +3132,7 @@ function GameSave:GiveGUIInfo()
 	--квестовые предметы
 	if CONFIG.GUI_LoadQuestItems then
 		if not g_Player then
-			LOG("[E] Module GameSave.lua === g_Player not found!!!")
+			LOG("[E] Library GameSave.lua === g_Player not found!!!")
 			return nil
 		end
 		for i, questItem in ipairs(s.QuestItems or {}) do
@@ -3104,11 +3147,11 @@ function GameSave:GiveGUIInfo()
 		CurrentMap:ToleranceManager(s.Path.."\\"..CONFIG.Default_CurrentMap):Load()
 	end
 
-	LOG("[I] Module GameSave.lua === Apply GUIInfo")
+	LOG("[I] Library GameSave.lua === Apply GUIInfo")
 end
 function GameSave:GiveWeatherState()
 	if CONFIG.LoadWeatherState then
-		LOG("[I] Module GameSave.lua === GameLoad:GiveWeatherState()")
+		LOG("[I] Library GameSave.lua === GameLoad:GiveWeatherState()")
 		local WeatherState = self.WeatherState or {id=0,time=0}
 
 		SetWeather(WeatherState.id or 0)
@@ -3116,11 +3159,11 @@ function GameSave:GiveWeatherState()
 
 		UpdateWeather()
 
-		LOG("[I] Module GameSave.lua === Apply WeatherState")
+		LOG("[I] Library GameSave.lua === Apply WeatherState")
 	end
 end
 function GameSave:GiveScriptState()
-	LOG("[I] Module GameSave.lua === GameLoad:GiveScriptState()")
+	LOG("[I] Library GameSave.lua === GameLoad:GiveScriptState()")
 	local s = self
 
 	--вары
@@ -3141,10 +3184,10 @@ function GameSave:GiveScriptState()
 		end
 	end
 
-	LOG("[I] Module GameSave.lua === Apply ScriptState")
+	LOG("[I] Library GameSave.lua === Apply ScriptState")
 end
 function GameSave:GiveDynamicScene()
-	LOG("[I] Module GameSave.lua === GameLoad:GiveDynamicScene()")
+	LOG("[I] Library GameSave.lua === GameLoad:GiveDynamicScene()")
 	local s = self
 	local DynScene = CurrentMap:DynamicSceneManager()
 
@@ -3154,7 +3197,7 @@ function GameSave:GiveDynamicScene()
         local Money = Player._itemProperties.Money
         if Money then
 			if not g_Player then
-				LOG("[E] Module GameSave.lua === g_Player not found!!!")
+				LOG("[E] Library GameSave.lua === g_Player not found!!!")
 				return nil
 			end
 			g_Player:AddMoney(-1e10)
@@ -3162,7 +3205,7 @@ function GameSave:GiveDynamicScene()
         end
     end
     if CONFIG.Player_LoadVehicle and Player._itemProperties then
-		LOG("[I] Module GameSave.lua === LoadPlayer...")
+		LOG("[I] Library GameSave.lua === LoadPlayer...")
         local PlayerVehicle
         for i, child in ipairs(Player._itemChilds or {}) do
             if child._itemTag=="Object" then
@@ -3197,12 +3240,12 @@ function GameSave:GiveDynamicScene()
                 end
             end
         else
-            LOG("[E] Module GameSave.lua === PlayerVehicle object ERROR!")
+            LOG("[E] Library GameSave.lua === PlayerVehicle object ERROR!")
         end
     end
 	--инфекшены
 	if CONFIG.DynamicScene_LoadInfection then
-		LOG("[I] Module GameSave.lua === LoadInfection...")
+		LOG("[I] Library GameSave.lua === LoadInfection...")
 		local InfectionTeams = s.InfectionTeams
 		for i, Team in ipairs(InfectionTeams or {}) do
 			DynScene:CreateAndSetTeam(nil, Team)
@@ -3210,7 +3253,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--локации
 	if CONFIG.DynamicScene_LoadLocations then
-		LOG("[I] Module GameSave.lua === LoadLocations...")
+		LOG("[I] Library GameSave.lua === LoadLocations...")
 		local Locations = s.Locations
         --LOG('locs\n'..table_debug(s.Locations))
 		for i, Location in ipairs(Locations or {}) do
@@ -3219,7 +3262,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--тимы
 	if CONFIG.DynamicScene_LoadTeams then
-		LOG("[I] Module GameSave.lua === LoadTeams...")
+		LOG("[I] Library GameSave.lua === LoadTeams...")
 		local Teams = s.Teams
 		for i, Team in ipairs(Teams or {}) do
 			DynScene:CreateAndSetTeam(nil, Team)
@@ -3227,7 +3270,7 @@ function GameSave:GiveDynamicScene()
 	end
     --рандомные машины
     if CONFIG.DynamicScene_LoadVehicles then
-		LOG("[I] Module GameSave.lua === LoadVehicles...")
+		LOG("[I] Library GameSave.lua === LoadVehicles...")
 		local Vehicles = s.Vehicles
         --LOG('vehs\n'..table_debug(s.Vehicles))
 		for i, Vehicle in ipairs(Vehicles or {}) do
@@ -3236,7 +3279,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--баррикады
 	if CONFIG.DynamicScene_LoadBarricades then
-		LOG("[I] Module GameSave.lua === LoadBarricades...")
+		LOG("[I] Library GameSave.lua === LoadBarricades...")
 		local Barricades = s.Dynamics
         --LOG('bars\n'..table_debug(s.Dynamics))
 		for i, Barricade in ipairs(Barricades or {}) do
@@ -3245,7 +3288,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--человечки
 	if CONFIG.DynamicScene_LoadHumans then
-		LOG("[I] Module GameSave.lua === LoadHumans...")
+		LOG("[I] Library GameSave.lua === LoadHumans...")
 		local Humans = s.Humans
         --LOG('hums\n'..table_debug(s.Humans))
 		for i, Human in ipairs(Humans or {}) do
@@ -3254,7 +3297,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--доты
 	if CONFIG.DynamicScene_LoadDots then
-		LOG("[I] Module GameSave.lua === LoadDots...")
+		LOG("[I] Library GameSave.lua === LoadDots...")
 		local Dots = s.Dots
         --LOG('dots\n'..table_debug(s.Dots))
 		for i, Dot in ipairs(Dots or {}) do
@@ -3263,7 +3306,7 @@ function GameSave:GiveDynamicScene()
 	end
 	--нпс
 	if CONFIG.DynamicScene_LoadNPCsSpokenCounts then
-		LOG("[I] Module GameSave.lua === LoadNPCsSpokenCounts...")
+		LOG("[I] Library GameSave.lua === LoadNPCsSpokenCounts...")
 		local NPCs = s.NPCs
         --LOG('NPCs\n'..table_debug(s.NPCs))
 		for i, NPC in ipairs(NPCs or {}) do
@@ -3272,7 +3315,7 @@ function GameSave:GiveDynamicScene()
 	end
     --ящики
     if CONFIG.DynamicScene_LoadChests then
-		LOG("[I] Module GameSave.lua === LoadChests...")
+		LOG("[I] Library GameSave.lua === LoadChests...")
 		local Chests = s.Chests
         --LOG('Chests\n'..table_debug(s.Chests))
 		for i, Chest in ipairs(Chests or {}) do
@@ -3281,30 +3324,30 @@ function GameSave:GiveDynamicScene()
 	end
     --города
     if CONFIG.DynamicScene_LoadTowns then
-		LOG("[I] Module GameSave.lua === LoadTowns...")
-        local Towns = s.Towns	
+		LOG("[I] Library GameSave.lua === LoadTowns...")
+        local Towns = s.Towns
         for i, Town in ipairs(Towns or {}) do
             DynScene:SetTownShops(Town)
         end
     end
 	--оставшийся мусор
 	if CONFIG.DynamicScene_LoadUnsortedObjects then
-		LOG("[I] Module GameSave.lua === LoadUnsortedObjects...")
+		LOG("[I] Library GameSave.lua === LoadUnsortedObjects...")
 		local Unsorted = s.OtherNames
         --LOG('Unsorted\n'..table_debug(Unsorted))
 		for i, Object in ipairs(Unsorted or {}) do
 			local Property = Object._itemProperties
 			local obj = DynScene:CreateAndSetObject(Object)
 			if not obj then
-				LOG("[E] Module GameSave.lua === Unsorted object ERROR!", Property.Name)
+				LOG("[E] Library GameSave.lua === Unsorted object ERROR!", Property.Name)
 			end
 		end
 	end
 
-	LOG("[I] Module GameSave.lua === Apply DynamicScene")
+	LOG("[I] Library GameSave.lua === Apply DynamicScene")
 end
 function GameSave:GiveCachedDynamic()
-	LOG("[I] Module GameSave.lua === GameLoad:GiveCachedDynamic()")
+	LOG("[I] Library GameSave.lua === GameLoad:GiveCachedDynamic()")
 	local s = self
 	local DynScene = CurrentMap:DynamicSceneManager()
 	if next(s.CachedDynamic_TownWorkshops) or next(s.CachedDynamic_TownShops) then
@@ -3328,7 +3371,7 @@ function GameSave:GiveCachedDynamic()
 						end
 					end
 				else
-					LOG("[E] Module GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception > item ", itemID, "in", ShopName, " is nil")
+					LOG("[E] Library GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception > item ", itemID, "in", ShopName, " is nil")
 				end
 			end
 		local apply_vehicle_properties = function(vehicle, tbl_vehicle, ShopName)
@@ -3337,7 +3380,7 @@ function GameSave:GiveCachedDynamic()
 				if DynScene:CreateAndSetVehicle(veh, tbl_vehicle, false) then
 					--LOG("setted\n"..table_debug(vehicle._itemProperties))
 				else
-					LOG("[E] Module GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception > veh ", ObjectId, "in", ShopName, " is nil")
+					LOG("[E] Library GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception > veh ", ObjectId, "in", ShopName, " is nil")
 				end
 			end
 
@@ -3355,7 +3398,7 @@ function GameSave:GiveCachedDynamic()
 						apply_vehicle_properties(vehicle, tbl_Vehicles[i], WorkshopName)
 					end
 				else
-					LOG("[E] Module GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception \\/\\/\\/\n", WorkshopName, 'xml_CabinsAndBaskets\n'..table_debug(xml_CabinsAndBaskets), 'xml_Vehicles\n'..table_debug(xml_Vehicles), 'tbl_CabinsAndBaskets\n'..table_debug(tbl_CabinsAndBaskets), 'tbl_Vehicles\n'..table_debug(tbl_Vehicles))
+					LOG("[E] Library GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception \\/\\/\\/\n", WorkshopName, 'xml_CabinsAndBaskets\n'..table_debug(xml_CabinsAndBaskets), 'xml_Vehicles\n'..table_debug(xml_Vehicles), 'tbl_CabinsAndBaskets\n'..table_debug(tbl_CabinsAndBaskets), 'tbl_Vehicles\n'..table_debug(tbl_Vehicles))
 				end
 			end
 		end
@@ -3370,12 +3413,12 @@ function GameSave:GiveCachedDynamic()
 						apply_item_properties(item, tbl_Items[i], ShopName)
 					end
 				else
-					LOG("[E] Module GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception \\/\\/\\/\n", ShopName, 'xml_Items\n'..table_debug(xml_Items), 'tbl_Items\n'..table_debug(tbl_Items))
+					LOG("[E] Library GameSave.lua === Violation of the loading order! Try gently repeat loading order. Exception \\/\\/\\/\n", ShopName, 'xml_Items\n'..table_debug(xml_Items), 'tbl_Items\n'..table_debug(tbl_Items))
 				end
 			end
 		end
 
-		LOG("[I] Module GameSave.lua === Apply CachedDynamic")
+		LOG("[I] Library GameSave.lua === Apply CachedDynamic")
 
 		File:Clean(true)
 	end
@@ -3384,7 +3427,7 @@ end
 
 --скрипт-корутина
 function GameSave:FakeCoroutineScript()
-    LOG("[I] Module GameSave.lua === GameLoad:FakeCoroutineScript()")
+    LOG("[I] Library GameSave.lua === GameLoad:FakeCoroutineScript()")
 
 	LOG('Game loaded: "'..tostring(self.Path)..'\\maps'..'"')
 	GS:UpdateLastSavePATH(SaveInfo.PATH)
@@ -3424,7 +3467,7 @@ function GameSave:FakeCoroutineScript()
 
 	--очистка памяти
     File:Clean()
-	LOG("[I] Module GameSave.lua === Game loaded!")
+	LOG("[I] Library GameSave.lua === Game loaded!")
 end
 function GameSaveFakeCoroutineScript()
 	return GameSave:FakeCoroutineScript()
@@ -3432,12 +3475,12 @@ end
 
 --загрузчик
 function GameSave:LoadGame()
-    LOG("[I] Module GameSave.lua === GameLoad:LoadGame()")
+    LOG("[I] Library GameSave.lua === GameLoad:LoadGame()")
 	if File:Get() then
 		local s = self
 		local Path = CurrentMap.PATH
 
-		LOG("[I] Module GameSave.lua === Save path: '"..Path.."'")
+		LOG("[I] Library GameSave.lua === Save path: '"..Path.."'")
 
 		--получаем инфу перед загрузкой
 		s.LastSave_PATH 	= Path
@@ -3534,17 +3577,17 @@ function GameSave:LoadGame()
 		if CONFIG.LoadQuestState then
 			s.QuestMatrix = CurrentMap:QuestManager():GetQuestMatrix()
 		end
-		
+
 		--грузим чистую карту и шаманим ДО КОНЦААА
 		RuleConsole("/map "..s.LevelName)
 	else
-		LOG("[E] Module GameSave.lua === Loading files error!!!")
+		LOG("[E] Library GameSave.lua === Loading files error!!!")
 	end
 end
 
 
--- /////////////////////////// RETURN MODULE ////////////////////////////////
+-- /////////////////////////// RETURN LIBRARY ////////////////////////////////
 
-LOG("[I] Module GameSave.lua "..GameSave.version.." successfully loaded.")
+LOG("[I] Library GameSave.lua "..GameSave.version.." successfully loaded.")
 
 return GS
