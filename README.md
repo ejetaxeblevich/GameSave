@@ -38,8 +38,8 @@
       <td><a href="#wtf_en">Brief description</a></td>
     </tr>
     <tr>
-      <td><a href="#howToFixRelationship_ru">Как починить отношения группировок после бага (инструкция для игроков)</a></td>
-      <td><a href="#howToFixRelationship_en">How to fix gangs relationship after a bug (instructions for players)</a></td>
+      <td><a href="#howToFixRelationship_ru">Как починить отношения группировок<br>после бага (инструкция для игроков)</a></td>
+      <td><a href="#howToFixRelationship_en">How to fix gangs relationship<br>after a bug (instructions for players)</a></td>
     </tr>
    <tr>
       <td><a href="#whatCanThisLoad_ru">Что этот lua-модуль может загрузить</a></td>
