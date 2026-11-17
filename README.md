@@ -62,6 +62,10 @@
       <td><a href="#incorrigibleBugs_en">Incorrigible bugs</a></td>
     </tr>
     <tr>
+      <td><a href="#licensing_ru">Лицензирование</a></td>
+      <td><a href="#licensing_en">Licensing</a></td>
+    </tr>
+    <tr>
       <td><a href="#detailsAndThanks_ru">Подробности и выражение благодарности</a></td>
       <td><a href="#detailsAndThanks_en">Details and gratitude</a></td>
     </tr>
@@ -473,6 +477,16 @@ Class GS
 - Нестабильная обработка сложных квестов и дудос OnEvent'ами.
 
 (я не придумал, как это можно починить)
+
+<a id="licensing_ru"></a>
+
+## Лицензирование
+
+Проект распространяется в полном виде только на Github.com. Распространение файлов на других сайтах посторонними людьми не разрешено.
+
+Исходный код проекта лицензирован под MIT-подобной лицензией (исключая коммерческое использование) и может быть свободно использован как основа для создания ваших собственных модов. Пожалуйста, не забывайте сохранять текст лицензии и ссылку на проект, если используете его части.
+
+Для подробностей, пожалуйста, ознакомьтесь с полным текстом лицензии в файле `LICENCE`.
 
 <a id="detailsAndThanks_ru"></a>
 
@@ -896,6 +910,16 @@ Class GS
 - Unstable handling of complex quests and dudos OnEvents.
 
 (I haven't figured out how to fix it)
+
+<a id="licensing_en"></a>
+
+## Licensing
+
+The project is distributed in its entirety only to Github.com. Distribution of files on other sites by unauthorized people is not allowed.
+
+The source code of the project is licensed under an MIT-like license (excluding commercial use) and can be freely used as a basis for creating your own mods. Please do not forget to save the license text and the link to the project if you use parts of it.
+
+For details, please read the full license text in the file `LICENCE`.
 
 <a id="detailsAndThanks_en"></a>
 
