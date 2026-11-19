@@ -1,6 +1,6 @@
 <div align="center">
 
-# GameSave.lua
+# GameSave
 
 ***ЗАГРУЗОЧНЫЙ LUA-МОДУЛЬ,*** *написанный специально для игры [Ex Machina](https://store.steampowered.com/app/285500/Hard_Truck_Apocalypse__Ex_Machina/)*
 
